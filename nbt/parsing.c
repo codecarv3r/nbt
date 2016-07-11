@@ -98,7 +98,7 @@ nbt_t* _nbt_parse_payload(nbt_type_t type, const char* name, nbt_coder_t* coder,
 			nbt_t* tag = nbt_create_list(name, list_type);
 			int32_t count = nbt_coder_decode_int(coder, order);
 			for (int32_t i = 0; i < count; i++) {
-#warning NBT_List is not implemented
+				nbt_list_add(tag, _nbt_parse_payload(list_type, NULL, coder, order, errorp));
 			}
 			return tag;
 		}
@@ -106,7 +106,7 @@ nbt_t* _nbt_parse_payload(nbt_type_t type, const char* name, nbt_coder_t* coder,
 			nbt_t* tag = nbt_create_compound(name);
 			nbt_t* next = NULL;
 			while ((next = _nbt_parse_coder(coder, order, errorp))) {
-#warning NBT_Compound is not implemented
+				nbt_compound_set(tag, next);
 			}
 			return tag;
 		}

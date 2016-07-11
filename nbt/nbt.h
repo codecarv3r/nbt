@@ -88,6 +88,30 @@ void nbt_destroy(nbt_t* tag);
 /* Parsing */
 nbt_t* nbt_parse_data(const char* bytes, size_t length, nbt_byte_order_t order, nbt_status_t* errorp);
 
+/* Get the value of simple types */
+int8_t nbt_byte(nbt_t* tag);
+int16_t nbt_short(nbt_t* tag);
+int32_t nbt_int(nbt_t* tag);
+int64_t nbt_long(nbt_t* tag);
+float nbt_float(nbt_t* tag);
+double nbt_double(nbt_t* tag);
+
+const int8_t* nbt_byte_array(nbt_t* tag);
+const int32_t* nbt_int_array(nbt_t* tag);
+
+const char* nbt_string(nbt_t* tag);
+
+/* Working with lists */
+int32_t nbt_list_count(nbt_t* list);
+nbt_t* nbt_list_index(nbt_t* list, int32_t index);
+void nbt_list_add(nbt_t* list, nbt_t* item);
+void nbt_list_remove(nbt_t* list, int32_t index);
+
+/* Working with compounds */
+nbt_t* nbt_compound_name(nbt_t* compound, const char* name);
+void nbt_compound_set(nbt_t* compound, nbt_t* item);
+void nbt_compound_remove(nbt_t* compound, const char* name);
+
 __END_DECLS
 
 #endif /* nbt_h */

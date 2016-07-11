@@ -56,7 +56,7 @@ struct _nbt {
 		
 		char* tag_string;
 		
-		struct nbt_tree {
+		struct nbt_list {
 			int8_t type;
 			nbt_t* tree;
 		} tag_list;
@@ -68,6 +68,9 @@ struct _nbt {
 			int32_t* int_array;
 		} tag_int_array;
 	} payload;
+	
+	nbt_t* tree_left;
+	nbt_t* tree_right;
 };
 
 #endif /* internal_h */

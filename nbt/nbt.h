@@ -32,6 +32,8 @@
 
 #include <stdio.h>
 
+#include "byte_order.h"
+
 __BEGIN_DECLS
 
 typedef struct _nbt nbt_t;
@@ -82,6 +84,9 @@ nbt_t* nbt_create_compound(const char* name);
 
 /* Don't leak memory, mkay? */
 void nbt_destroy(nbt_t* tag);
+
+/* Parsing */
+nbt_t* nbt_parse_data(const char* bytes, size_t length, nbt_byte_order_t order, nbt_status_t* errorp);
 
 __END_DECLS
 

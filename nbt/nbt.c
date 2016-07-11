@@ -27,45 +27,7 @@
  *
  */
 
-#include "nbt.h"
-
-#include <assert.h>
-#include <stdarg.h>
-#include <stdlib.h>
-#include <string.h>
-
-struct _nbt {
-	nbt_type_t type;
-	char* name;
-	
-	union {
-		int8_t tag_byte;
-		int16_t tag_short;
-		int32_t tag_int;
-		int64_t tag_long;
-		float tag_float;
-		double tag_double;
-		
-		struct nbt_byte_array {
-			int32_t length;
-			int8_t* byte_array;
-		} tag_byte_array;
-		
-		char* tag_string;
-		
-		struct nbt_tree {
-			int8_t type;
-			nbt_t* tree;
-		} tag_list;
-		
-		nbt_t* tag_compound;
-		
-		struct nbt_int_array {
-			int32_t length;
-			int32_t* int_array;
-		} tag_int_array;
-	} payload;
-};
+#include "internal.h"
 
 nbt_t* nbt_create() {
 	nbt_t* tag = malloc(sizeof(*tag));

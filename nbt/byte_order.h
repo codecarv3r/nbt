@@ -42,17 +42,17 @@ typedef enum {
 extern nbt_byte_order_t nbt_native_byte_order;
 
 void nbt_swap(void* data, size_t length);
-int16_t nbt_swap16(int16_t value);
-int32_t nbt_swap32(int32_t value);
-int64_t nbt_swap64(int64_t value);
+int16_t nbt_swap_short(int16_t value);
+int32_t nbt_swap_int(int32_t value);
+int64_t nbt_swap_long(int64_t value);
 float nbt_swap_float(float value);
 double nbt_swap_double(double value);
 
-int16_t nbt_get16(int16_t value, nbt_byte_order_t byte_order);
-int32_t nbt_get32(int32_t value, nbt_byte_order_t byte_order);
-int64_t nbt_get64(int64_t value, nbt_byte_order_t byte_order);
-float nbt_get_float(float value, nbt_byte_order_t byte_order);
-double nbt_get_double(double value, nbt_byte_order_t byte_order);
+int16_t nbt_reorder_short(int16_t value, nbt_byte_order_t byte_order);
+int32_t nbt_reorder_int(int32_t value, nbt_byte_order_t byte_order);
+int64_t nbt_reorder_long(int64_t value, nbt_byte_order_t byte_order);
+float nbt_reorder_float(float value, nbt_byte_order_t byte_order);
+double nbt_reorder_double(double value, nbt_byte_order_t byte_order);
 
 __END_DECLS
 

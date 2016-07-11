@@ -89,7 +89,7 @@ nbt_t* nbt_create_double(const char* name, double payload) {
 	return tag;
 }
 
-nbt_t* nbt_create_byte_array(const char* name, int8_t* bytes, int32_t length) {
+nbt_t* nbt_create_byte_array(const char* name, const int8_t* bytes, int32_t length) {
 	nbt_t* tag = nbt_create();
 	if (name) {
 		tag->name = strdup(name);
@@ -100,7 +100,7 @@ nbt_t* nbt_create_byte_array(const char* name, int8_t* bytes, int32_t length) {
 	return tag;
 }
 
-nbt_t* nbt_create_int_array(const char* name, int32_t* ints, int32_t length) {
+nbt_t* nbt_create_int_array(const char* name, const int32_t* ints, int32_t length) {
 	nbt_t* tag = nbt_create();
 	if (name) {
 		tag->name = strdup(name);

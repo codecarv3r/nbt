@@ -32,6 +32,8 @@
 
 #include <stdio.h>
 
+#include "byte_order.h"
+
 __BEGIN_DECLS
 
 typedef struct _nbt_coder nbt_coder_t;
@@ -39,28 +41,28 @@ typedef struct _nbt_coder nbt_coder_t;
 nbt_coder_t* nbt_coder_create();
 void nbt_coder_destroy(nbt_coder_t* coder);
 
-const char* nbt_coder_get_data(nbt_coder_t* coder, size_t* length);
+const char* nbt_coder_reorder_data(nbt_coder_t* coder, size_t* length);
 
 /* Choose one or the other */
-void nbt_coder_initiate_encoder(nbt_coder_t* coder);
-void nbt_coder_initiate_decoder(nbt_coder_t* coder, const char* data, size_t length);
+void nbt_coder_initialize_encoder(nbt_coder_t* coder);
+void nbt_coder_initialize_decoder(nbt_coder_t* coder, const char* data, size_t length);
 
 /* Encoder */
 void nbt_coder_encode_byte(nbt_coder_t* coder, int8_t item);
-void nbt_coder_encode_short(nbt_coder_t* coder, int16_t item);
-void nbt_coder_encode_int(nbt_coder_t* coder, int32_t item);
-void nbt_coder_encode_long(nbt_coder_t* coder, int64_t item);
-void nbt_coder_encode_float(nbt_coder_t* coder, float item);
-void nbt_coder_encode_double(nbt_coder_t* coder, double item);
+void nbt_coder_encode_short(nbt_coder_t* coder, int16_t item, nbt_byte_order_t order);
+void nbt_coder_encode_int(nbt_coder_t* coder, int32_t item, nbt_byte_order_t order);
+void nbt_coder_encode_long(nbt_coder_t* coder, int64_t item, nbt_byte_order_t order);
+void nbt_coder_encode_float(nbt_coder_t* coder, float item, nbt_byte_order_t order);
+void nbt_coder_encode_double(nbt_coder_t* coder, double item, nbt_byte_order_t order);
 void nbt_coder_encode_data(nbt_coder_t* coder, const char* data, size_t length);
 
 /* Decoder */
 int8_t nbt_coder_decode_byte(nbt_coder_t* coder);
-int16_t nbt_coder_decode_short(nbt_coder_t* coder);
-int32_t nbt_coder_decode_int(nbt_coder_t* coder);
-int64_t nbt_coder_decode_long(nbt_coder_t* coder);
-float nbt_coder_decode_float(nbt_coder_t* coder);
-double nbt_coder_decode_double(nbt_coder_t* coder);
+int16_t nbt_coder_decode_short(nbt_coder_t* coder, nbt_byte_order_t order);
+int32_t nbt_coder_decode_int(nbt_coder_t* coder, nbt_byte_order_t order);
+int64_t nbt_coder_decode_long(nbt_coder_t* coder, nbt_byte_order_t order);
+float nbt_coder_decode_float(nbt_coder_t* coder, nbt_byte_order_t order);
+double nbt_coder_decode_double(nbt_coder_t* coder, nbt_byte_order_t order);
 void nbt_coder_decode_data(nbt_coder_t* coder, char* buffer, size_t length);
 
 __END_DECLS

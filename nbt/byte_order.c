@@ -49,18 +49,18 @@ void nbt_swap(void* data, size_t length) {
 	memcpy(original, temp, length);
 }
 
-int16_t nbt_swap16(int16_t value) {
+int16_t nbt_swap_short(int16_t value) {
 	return (value << 8) | (value >> 8);
 }
 
-int32_t nbt_swap32(int32_t value) {
+int32_t nbt_swap_int(int32_t value) {
 	return (((value & 0x00000000FF000000) >> 24) |
 			((value & 0x0000000000FF0000) >> 8)  |
 			((value & 0x000000000000FF00) << 8)  |
 			((value & 0x00000000000000FF) << 24));
 }
 
-int64_t nbt_swap64(int64_t value) {
+int64_t nbt_swap_long(int64_t value) {
 	return (((value & 0xFF00000000000000) >> 56) |
 			((value & 0x00FF000000000000) >> 40) |
 			((value & 0x0000FF0000000000) >> 24) |
@@ -72,40 +72,40 @@ int64_t nbt_swap64(int64_t value) {
 }
 
 float nbt_swap_float(float value) {
-	int32_t temp = nbt_swap32(*(int32_t*)&value);
+	int32_t temp = nbt_swap_int(*(int32_t*)&value);
 	return *(float*)&temp;
 }
 
 double nbt_swap_double(double value) {
-	int64_t temp = nbt_swap64(*(int64_t*)&value);
+	int64_t temp = nbt_swap_long(*(int64_t*)&value);
 	return *(double*)&temp;
 }
 
-int16_t nbt_get16(int16_t value, nbt_byte_order_t byte_order) {
+int16_t nbt_reorder_short(int16_t value, nbt_byte_order_t byte_order) {
 	if (byte_order != nbt_native_byte_order) {
-		return nbt_swap16(value);
+		return nbt_swap_short(value);
 	} else {
 		return value;
 	}
 }
 
-int32_t nbt_get32(int32_t value, nbt_byte_order_t byte_order) {
+int32_t nbt_reorder_int(int32_t value, nbt_byte_order_t byte_order) {
 	if (byte_order != nbt_native_byte_order) {
-		return nbt_swap32(value);
+		return nbt_swap_int(value);
 	} else {
 		return value;
 	}
 }
 
-int64_t nbt_get64(int64_t value, nbt_byte_order_t byte_order) {
+int64_t nbt_reorder_long(int64_t value, nbt_byte_order_t byte_order) {
 	if (byte_order != nbt_native_byte_order) {
-		return nbt_swap64(value);
+		return nbt_swap_long(value);
 	} else {
 		return value;
 	}
 }
 
-float nbt_get_float(float value, nbt_byte_order_t byte_order) {
+float nbt_reorder_float(float value, nbt_byte_order_t byte_order) {
 	if (byte_order != nbt_native_byte_order) {
 		return nbt_swap_float(value);
 	} else {
@@ -113,7 +113,7 @@ float nbt_get_float(float value, nbt_byte_order_t byte_order) {
 	}
 }
 
-double nbt_get_double(double value, nbt_byte_order_t byte_order) {
+double nbt_reorder_double(double value, nbt_byte_order_t byte_order) {
 	if (byte_order != nbt_native_byte_order) {
 		return nbt_swap_double(value);
 	} else {

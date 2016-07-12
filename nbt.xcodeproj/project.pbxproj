@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1E4A64781D35727D00673761 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 1E4A64771D35727D00673761 /* README.md */; };
 		1EB08C541D34528F00943B54 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 1EB08C531D34528F00943B54 /* main.c */; };
 		1EB08C581D3452AA00943B54 /* libnbt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EE7F1211D32F783007E6BBD /* libnbt.a */; };
 		1EE7F12B1D32F811007E6BBD /* nbt.c in Sources */ = {isa = PBXBuildFile; fileRef = 1EE7F1291D32F811007E6BBD /* nbt.c */; };
@@ -43,6 +44,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1E4A64741D35727D00673761 /* level.nbt */ = {isa = PBXFileReference; lastKnownFileType = file; path = level.nbt; sourceTree = "<group>"; };
+		1E4A64751D35727D00673761 /* level_unzipped.nbt */ = {isa = PBXFileReference; lastKnownFileType = file; path = level_unzipped.nbt; sourceTree = "<group>"; };
+		1E4A64761D35727D00673761 /* NBT.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = NBT.txt; sourceTree = "<group>"; };
+		1E4A64771D35727D00673761 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		1EB08C511D34528F00943B54 /* nbt_dump */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = nbt_dump; sourceTree = BUILT_PRODUCTS_DIR; };
 		1EB08C531D34528F00943B54 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		1EE7F1211D32F783007E6BBD /* libnbt.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libnbt.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -77,6 +82,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1E4A64721D35725A00673761 /* extra */ = {
+			isa = PBXGroup;
+			children = (
+				1E4A64731D35727D00673761 /* test_data */,
+				1E4A64761D35727D00673761 /* NBT.txt */,
+				1E4A64771D35727D00673761 /* README.md */,
+			);
+			name = extra;
+			sourceTree = "<group>";
+		};
+		1E4A64731D35727D00673761 /* test_data */ = {
+			isa = PBXGroup;
+			children = (
+				1E4A64741D35727D00673761 /* level.nbt */,
+				1E4A64751D35727D00673761 /* level_unzipped.nbt */,
+			);
+			path = test_data;
+			sourceTree = "<group>";
+		};
 		1EB08C521D34528F00943B54 /* nbt_dump */ = {
 			isa = PBXGroup;
 			children = (
@@ -90,6 +114,7 @@
 			children = (
 				1EE7F1281D32F7DB007E6BBD /* nbt */,
 				1EB08C521D34528F00943B54 /* nbt_dump */,
+				1E4A64721D35725A00673761 /* extra */,
 				1EE7F1221D32F783007E6BBD /* Products */,
 			);
 			sourceTree = "<group>";
@@ -228,6 +253,7 @@
 				1EF1F9AD1D331DF300A6FC45 /* byte_order.c in Sources */,
 				1EE7F12B1D32F811007E6BBD /* nbt.c in Sources */,
 				1EF1F9B51D33251600A6FC45 /* printing.c in Sources */,
+				1E4A64781D35727D00673761 /* README.md in Sources */,
 				1EF1F9B81D3325C700A6FC45 /* coder.c in Sources */,
 				1EF1F9B21D33247400A6FC45 /* writing.c in Sources */,
 				1EF1F9B01D33246600A6FC45 /* parsing.c in Sources */,

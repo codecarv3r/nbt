@@ -8,6 +8,7 @@ A c library called [cNBT](https://github.com/FliPPeh/cNBT) for manipulating data
 * Parsing of NBT data (uncompressed)
 * Tree manipulation
 * Printing with indentation
+* Printing with pipes
 * A very basic application which will print a file's nbt tree
 
 ##Prerequisites

@@ -29,7 +29,6 @@
 
 #include "internal.h"
 
-int32_t _nbt_tree_count(nbt_t* node);
 nbt_t* _nbt_tree_index(nbt_t* node, int32_t index);
 nbt_t* _nbt_tree_end(nbt_t* node);
 nbt_t* _nbt_tree_name(nbt_t* node, const char* name);

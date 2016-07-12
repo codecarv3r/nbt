@@ -73,4 +73,6 @@ struct _nbt {
 	nbt_t* tree_right;
 };
 
+int32_t _nbt_tree_count(nbt_t* node);
+
 #endif /* internal_h */

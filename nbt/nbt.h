@@ -114,6 +114,14 @@ nbt_t* nbt_compound_name(nbt_t* compound, const char* name);
 void nbt_compound_set(nbt_t* compound, nbt_t* item);
 void nbt_compound_remove(nbt_t* compound, const char* name);
 
+/* Printing */
+typedef enum {
+	NBT_STYLE_ORIGINAL,
+	NBT_STYLE_FANCY
+} nbt_print_style_t;
+
+char* nbt_print(nbt_t* tag, nbt_print_style_t style);
+
 __END_DECLS
 
 #endif /* nbt_h */

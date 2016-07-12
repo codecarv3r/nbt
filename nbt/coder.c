@@ -79,42 +79,42 @@ void nbt_coder_initialize_decoder(nbt_coder_t* coder, const char* data, size_t l
 void nbt_coder_encode_byte(nbt_coder_t* coder, int8_t item) {
 	assert(coder->type == ENCODER);
 	_nbt_coder_reserve(coder, coder->length + sizeof(item));
-	*(typeof(item)*)((uintptr_t)coder->data + coder->length) = item;
+	*(__typeof__(item)*)((uintptr_t)coder->data + coder->length) = item;
 	coder->length += sizeof(item);
 }
 
 void nbt_coder_encode_short(nbt_coder_t* coder, int16_t item, nbt_byte_order_t order) {
 	assert(coder->type == ENCODER);
 	_nbt_coder_reserve(coder, coder->length + sizeof(item));
-	*(typeof(item)*)((uintptr_t)coder->data + coder->length) = nbt_reorder_short(item, order);
+	*(__typeof__(item)*)((uintptr_t)coder->data + coder->length) = nbt_reorder_short(item, order);
 	coder->length += sizeof(item);
 }
 
 void nbt_coder_encode_int(nbt_coder_t* coder, int32_t item, nbt_byte_order_t order) {
 	assert(coder->type == ENCODER);
 	_nbt_coder_reserve(coder, coder->length + sizeof(item));
-	*(typeof(item)*)((uintptr_t)coder->data + coder->length) = nbt_reorder_int(item, order);
+	*(__typeof__(item)*)((uintptr_t)coder->data + coder->length) = nbt_reorder_int(item, order);
 	coder->length += sizeof(item);
 }
 
 void nbt_coder_encode_long(nbt_coder_t* coder, int64_t item, nbt_byte_order_t order) {
 	assert(coder->type == ENCODER);
 	_nbt_coder_reserve(coder, coder->length + sizeof(item));
-	*(typeof(item)*)((uintptr_t)coder->data + coder->length) = nbt_reorder_long(item, order);
+	*(__typeof__(item)*)((uintptr_t)coder->data + coder->length) = nbt_reorder_long(item, order);
 	coder->length += sizeof(item);
 }
 
 void nbt_coder_encode_float(nbt_coder_t* coder, float item, nbt_byte_order_t order) {
 	assert(coder->type == ENCODER);
 	_nbt_coder_reserve(coder, coder->length + sizeof(item));
-	*(typeof(item)*)((uintptr_t)coder->data + coder->length) = nbt_reorder_float(item, order);
+	*(__typeof__(item)*)((uintptr_t)coder->data + coder->length) = nbt_reorder_float(item, order);
 	coder->length += sizeof(item);
 }
 
 void nbt_coder_encode_double(nbt_coder_t* coder, double item, nbt_byte_order_t order) {
 	assert(coder->type == ENCODER);
 	_nbt_coder_reserve(coder, coder->length + sizeof(item));
-	*(typeof(item)*)((uintptr_t)coder->data + coder->length) = nbt_reorder_double(item, order);
+	*(__typeof__(item)*)((uintptr_t)coder->data + coder->length) = nbt_reorder_double(item, order);
 	coder->length += sizeof(item);
 }
 

@@ -117,7 +117,7 @@ void nbt_compound_remove(nbt_t* compound, const char* name);
 /* Printing */
 typedef enum {
 	NBT_STYLE_ORIGINAL,
-	NBT_STYLE_FANCY
+	NBT_STYLE_PIPE
 } nbt_print_style_t;
 
 char* nbt_print(nbt_t* tag, nbt_print_style_t style);

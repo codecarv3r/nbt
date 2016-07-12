@@ -50,18 +50,19 @@ const char* _nbt_type_names[] = {
 
 char* _nbt_printf(const char* format, ...) __printflike(1, 2);
 char* _nbt_vprintf(const char* format, va_list ap) __printflike(1, 0);
-char* _nbt_tabs(int count);
+char* _nbt_tabs(size_t count);
+char* _nbt_spaces(size_t count);
 
-char* _nbt_print_original(nbt_t* tag);
-char* _nbt_print_original_tab(nbt_t* tag, int tab_count);
+char* _nbt_print_original(nbt_t* tag, int tab_count);
+char* _nbt_print_pipe(nbt_t* tag, const char* start_string);
 
 char* nbt_print(nbt_t* tag, nbt_print_style_t style) {
 	switch (style) {
 		case NBT_STYLE_ORIGINAL:
-			return _nbt_print_original(tag);
+			return _nbt_print_original(tag, 0);
 			break;
-		case NBT_STYLE_FANCY:
-			return strdup("");
+		case NBT_STYLE_PIPE:
+			return _nbt_print_pipe(tag, "");
 			break;
 	}
 }
@@ -80,18 +81,21 @@ char* _nbt_vprintf(const char* format, va_list ap) {
 	return print;
 }
 
-char* _nbt_tabs(int count) {
+char* _nbt_tabs(size_t count) {
 	char* print = malloc(count + 1);
 	memset(print, '\t', count);
 	print[count] = '\0';
 	return print;
 }
 
-char* _nbt_print_original(nbt_t* tag) {
-	return _nbt_print_original_tab(tag, 0);
+char* _nbt_spaces(size_t count) {
+	char* print = malloc(count + 1);
+	memset(print, ' ', count);
+	print[count] = '\0';
+	return print;
 }
 
-char* _nbt_print_original_tab(nbt_t* tag, int tab_count) {
+char* _nbt_print_original(nbt_t* tag, int tab_count) {
 	char* start;
 	if (tag->name) {
 		start = _nbt_printf("%s(\"%s\")", _nbt_type_names[tag->type], tag->name);
@@ -137,7 +141,7 @@ char* _nbt_print_original_tab(nbt_t* tag, int tab_count) {
 			nbt_t* item = tag->payload.tag_list.tree;
 			char* temp;
 			do {
-				char* next = _nbt_print_original_tab(item, tab_count + 1);
+				char* next = _nbt_print_original(item, tab_count + 1);
 				temp = _nbt_printf("%s%s", print, next);
 				free(print);
 				free(next);
@@ -153,7 +157,7 @@ char* _nbt_print_original_tab(nbt_t* tag, int tab_count) {
 			nbt_t* item = tag->payload.tag_compound;
 			char* temp;
 			do {
-				char* next = _nbt_print_original_tab(item, tab_count + 1);
+				char* next = _nbt_print_original(item, tab_count + 1);
 				temp = _nbt_printf("%s%s", print, next);
 				free(print);
 				free(next);
@@ -164,5 +168,124 @@ char* _nbt_print_original_tab(nbt_t* tag, int tab_count) {
 			print = temp;
 			break;
 	}
+	free(tabs);
+	return print;
+}
+
+char* _nbt_print_pipe(nbt_t* tag, const char* start_string) {
+	char* start;
+	if (tag->name) {
+		start = _nbt_printf("%s(\"%s\")", _nbt_type_names[tag->type], tag->name);
+	} else {
+		start = _nbt_printf("%s", _nbt_type_names[tag->type]);
+	}
+	char* print;
+	switch (tag->type) {
+		case NBT_END:
+			print = strdup("");
+			break;
+		case NBT_BYTE:
+			print = _nbt_printf("%s: %d\n", start, tag->payload.tag_byte);
+			break;
+		case NBT_SHORT:
+			print = _nbt_printf("%s: %d\n", start, tag->payload.tag_short);
+			break;
+		case NBT_INT:
+			print = _nbt_printf("%s: %d\n", start, tag->payload.tag_int);
+			break;
+		case NBT_LONG:
+			print = _nbt_printf("%s: %lld\n", start, tag->payload.tag_long);
+			break;
+		case NBT_FLOAT:
+			print = _nbt_printf("%s: %f\n", start, tag->payload.tag_float);
+			break;
+		case NBT_DOUBLE:
+			print = _nbt_printf("%s: %lf\n", start, tag->payload.tag_double);
+			break;
+		case NBT_STRING:
+			print = _nbt_printf("%s: %s\n", start, tag->payload.tag_string);
+			break;
+		case NBT_BYTE_ARRAY:
+			print = _nbt_printf("%s: [%d bytes]\n", start, tag->payload.tag_byte_array.length);
+			break;
+		case NBT_INT_ARRAY:
+			print = _nbt_printf("%s: [%d ints]\n", start, tag->payload.tag_int_array.length);
+			break;
+		case NBT_LIST:
+		{
+			char* spaces = _nbt_spaces(strlen(start) + 2);
+			char* new_start_string_pipe    = _nbt_printf("%s%s│  ", start_string, spaces);
+			char* new_start_string_no_pipe = _nbt_printf("%s%s   ", start_string, spaces);
+			char* new_start_string_before  = _nbt_printf("%s%s", start_string, spaces);
+			free(spaces);
+			char* temp;
+			nbt_t* item = tag->payload.tag_list.tree;
+			if (item->tree_right) {
+				char* child_print = _nbt_print_pipe(item, new_start_string_pipe);
+				print = _nbt_printf("%s ─┬─ %s", start, child_print);
+				free(child_print);
+				item = item->tree_right;
+				while (item->tree_right) {
+					child_print = _nbt_print_pipe(item, new_start_string_pipe);
+					temp = _nbt_printf("%s%s├─ %s", print, new_start_string_before, child_print);
+					free(print);
+					print = temp;
+					free(child_print);
+					item = item->tree_right;
+				}
+				child_print = _nbt_print_pipe(item, new_start_string_no_pipe);
+				temp = _nbt_printf("%s%s└─ %s", print, new_start_string_before, child_print);
+				free(print);
+				print = temp;
+				free(child_print);
+			} else {
+				char* child_print = _nbt_print_pipe(item, new_start_string_no_pipe);
+				print = _nbt_printf("%s ─── %s", start, child_print);
+				free(child_print);
+			}
+			free(new_start_string_pipe);
+			free(new_start_string_no_pipe);
+			free(new_start_string_before);
+			break;
+		}
+		case NBT_COMPOUND:
+		{
+			char* spaces = _nbt_spaces(strlen(start) + 2);
+			char* new_start_string_pipe    = _nbt_printf("%s%s│  ", start_string, spaces);
+			char* new_start_string_no_pipe = _nbt_printf("%s%s   ", start_string, spaces);
+			char* new_start_string_before  = _nbt_printf("%s%s", start_string, spaces);
+			free(spaces);
+			char* temp;
+			nbt_t* item = tag->payload.tag_compound;
+			if (item->tree_right) {
+				char* child_print = _nbt_print_pipe(item, new_start_string_pipe);
+				print = _nbt_printf("%s ─┬─ %s", start, child_print);
+				free(child_print);
+				item = item->tree_right;
+				while (item->tree_right) {
+					child_print = _nbt_print_pipe(item, new_start_string_pipe);
+					temp = _nbt_printf("%s%s├─ %s", print, new_start_string_before, child_print);
+					free(print);
+					print = temp;
+					free(child_print);
+					item = item->tree_right;
+				}
+				child_print = _nbt_print_pipe(item, new_start_string_no_pipe);
+				temp = _nbt_printf("%s%s└─ %s", print, new_start_string_before, child_print);
+				free(print);
+				print = temp;
+				free(child_print);
+			} else {
+				char* child_print = _nbt_print_pipe(item, new_start_string_no_pipe);
+				print = _nbt_printf("%s ─── %s", start, child_print);
+				free(child_print);
+			}
+			free(new_start_string_pipe);
+			free(new_start_string_no_pipe);
+			free(new_start_string_before);
+			break;
+		}
+	}
+	free(start);
 	return print;
 }

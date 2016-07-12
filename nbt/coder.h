@@ -43,6 +43,10 @@ void nbt_coder_destroy(nbt_coder_t* coder);
 
 const char* nbt_coder_reorder_data(nbt_coder_t* coder, size_t* length);
 
+/* File System */
+nbt_coder_t* nbt_coder_read_file(const char* path);
+void nbt_coder_write_file(nbt_coder_t* coder, const char* path);
+
 /* Choose one or the other */
 void nbt_coder_initialize_encoder(nbt_coder_t* coder);
 void nbt_coder_initialize_decoder(nbt_coder_t* coder, const char* data, size_t length);

@@ -61,6 +61,28 @@ void nbt_coder_destroy(nbt_coder_t* coder) {
 	}
 }
 
+nbt_coder_t* nbt_coder_read_file(const char* path) {
+	FILE* fp = fopen(path, "r");
+	assert(fp);
+	fseek(fp, 0, SEEK_END);
+	size_t size = ftell(fp);
+	nbt_coder_t* coder = nbt_coder_create();
+	_nbt_coder_reserve(coder, size);
+	coder->length = size;
+	fseek(fp, 0, SEEK_SET);
+	fread(coder->data, size, 1, fp);
+	fclose(fp);
+	coder->type = DECODER;
+	return coder;
+}
+
+void nbt_coder_write_file(nbt_coder_t* coder, const char* path) {
+	FILE* fp = fopen(path, "w");
+	assert(fp);
+	fwrite(coder->data, coder->length, 1, fp);
+	fclose(fp);
+}
+
 void nbt_coder_initialize_encoder(nbt_coder_t* coder) {
 	coder->type = ENCODER;
 	_nbt_coder_reserve(coder, 0);

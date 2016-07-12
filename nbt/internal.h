@@ -41,7 +41,7 @@ struct _nbt {
 	nbt_type_t type;
 	char* name;
 	
-	union {
+	union nbt_payload {
 		int8_t tag_byte;
 		int16_t tag_short;
 		int32_t tag_int;

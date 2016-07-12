@@ -33,6 +33,7 @@
 #include <stdio.h>
 
 #include "byte_order.h"
+#include "coder.h"
 
 __BEGIN_DECLS
 
@@ -89,6 +90,9 @@ void nbt_destroy(nbt_t* tag);
 
 /* Parsing */
 nbt_t* nbt_parse_data(const char* bytes, size_t length, nbt_byte_order_t order, nbt_status_t* errorp);
+
+/* Writing */
+nbt_coder_t* nbt_write_data(nbt_t* tag, nbt_byte_order_t order);
 
 /* Get the value of simple types */
 int8_t nbt_byte(nbt_t* tag);

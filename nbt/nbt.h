@@ -72,6 +72,8 @@ nbt_t* nbt_create_long(const char* name, int64_t payload);
 nbt_t* nbt_create_float(const char* name, float payload);
 nbt_t* nbt_create_double(const char* name, double payload);
 
+nbt_t* nbt_create_string(const char* name, const char* payload);
+
 /* Create array types */
 nbt_t* nbt_create_byte_array(const char* name, const int8_t* bytes, int32_t length);
 nbt_t* nbt_create_int_array(const char* name, const int32_t* ints, int32_t length);

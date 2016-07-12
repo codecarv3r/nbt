@@ -44,6 +44,7 @@ nbt_t* nbt_create() {
 
 nbt_t* nbt_create_byte(const char* name, int8_t payload) {
 	nbt_t* tag = nbt_create();
+	tag->type = NBT_BYTE;
 	if (name) {
 		tag->name = strdup(name);
 	}
@@ -53,6 +54,7 @@ nbt_t* nbt_create_byte(const char* name, int8_t payload) {
 
 nbt_t* nbt_create_short(const char* name, int16_t payload) {
 	nbt_t* tag = nbt_create();
+	tag->type = NBT_SHORT;
 	if (name) {
 		tag->name = strdup(name);
 	}
@@ -62,6 +64,7 @@ nbt_t* nbt_create_short(const char* name, int16_t payload) {
 
 nbt_t* nbt_create_int(const char* name, int32_t payload) {
 	nbt_t* tag = nbt_create();
+	tag->type = NBT_INT;
 	if (name) {
 		tag->name = strdup(name);
 	}
@@ -71,6 +74,7 @@ nbt_t* nbt_create_int(const char* name, int32_t payload) {
 
 nbt_t* nbt_create_long(const char* name, int64_t payload) {
 	nbt_t* tag = nbt_create();
+	tag->type = NBT_LONG;
 	if (name) {
 		tag->name = strdup(name);
 	}
@@ -80,6 +84,7 @@ nbt_t* nbt_create_long(const char* name, int64_t payload) {
 
 nbt_t* nbt_create_float(const char* name, float payload) {
 	nbt_t* tag = nbt_create();
+	tag->type = NBT_FLOAT;
 	if (name) {
 		tag->name = strdup(name);
 	}
@@ -89,6 +94,7 @@ nbt_t* nbt_create_float(const char* name, float payload) {
 
 nbt_t* nbt_create_double(const char* name, double payload) {
 	nbt_t* tag = nbt_create();
+	tag->type = NBT_DOUBLE;
 	if (name) {
 		tag->name = strdup(name);
 	}
@@ -96,8 +102,19 @@ nbt_t* nbt_create_double(const char* name, double payload) {
 	return tag;
 }
 
+nbt_t* nbt_create_string(const char* name, const char* payload) {
+	nbt_t* tag = nbt_create();
+	tag->type = NBT_STRING;
+	if (name) {
+		tag->name = strdup(name);
+	}
+	tag->payload.tag_string = strdup(payload);
+	return tag;
+}
+
 nbt_t* nbt_create_byte_array(const char* name, const int8_t* bytes, int32_t length) {
 	nbt_t* tag = nbt_create();
+	tag->type = NBT_BYTE_ARRAY;
 	if (name) {
 		tag->name = strdup(name);
 	}
@@ -109,6 +126,7 @@ nbt_t* nbt_create_byte_array(const char* name, const int8_t* bytes, int32_t leng
 
 nbt_t* nbt_create_int_array(const char* name, const int32_t* ints, int32_t length) {
 	nbt_t* tag = nbt_create();
+	tag->type = NBT_INT_ARRAY;
 	if (name) {
 		tag->name = strdup(name);
 	}
@@ -120,6 +138,7 @@ nbt_t* nbt_create_int_array(const char* name, const int32_t* ints, int32_t lengt
 
 nbt_t* nbt_create_list(const char* name, nbt_type_t type) {
 	nbt_t* tag = nbt_create();
+	tag->type = NBT_LIST;
 	if (name) {
 		tag->name = strdup(name);
 	}
@@ -129,6 +148,7 @@ nbt_t* nbt_create_list(const char* name, nbt_type_t type) {
 
 nbt_t* nbt_create_compound(const char* name) {
 	nbt_t* tag = nbt_create();
+	tag->type = NBT_COMPOUND;
 	if (name) {
 		tag->name = strdup(name);
 	}
@@ -310,9 +330,13 @@ void nbt_compound_set(nbt_t* compound, nbt_t* item) {
 	if (current) {
 		_nbt_tree_replace(current, item);
 	} else {
-		current = _nbt_tree_end(compound->payload.tag_compound);
-		current->tree_right = item;
-		item->tree_left = current;
+		if (compound->payload.tag_compound) {
+			current = _nbt_tree_end(compound->payload.tag_compound);
+			current->tree_right = item;
+			item->tree_left = current;
+		} else {
+			compound->payload.tag_compound = item;
+		}
 	}
 }
 

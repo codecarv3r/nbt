@@ -75,8 +75,7 @@ nbt_t* _nbt_parse_payload(nbt_type_t type, const char* name, nbt_coder_t* coder,
 			int32_t length = nbt_coder_decode_int(coder, order);
 			int8_t array[length];
 			nbt_coder_decode_data(coder, (char*)array, length);
-			nbt_t* tag = nbt_create_byte_array(name, array, length);
-			return tag;
+			return nbt_create_byte_array(name, array, length);
 		}
 		case NBT_INT_ARRAY: {
 			int32_t length = nbt_coder_decode_int(coder, order);
@@ -84,14 +83,14 @@ nbt_t* _nbt_parse_payload(nbt_type_t type, const char* name, nbt_coder_t* coder,
 			for (int32_t i = 0; i < length; i++) {
 				array[i] = nbt_coder_decode_int(coder, order);
 			}
-			nbt_t* tag = nbt_create_int_array(name, array, length);
-			return tag;
+			return nbt_create_int_array(name, array, length);
 		}
 		case NBT_STRING: {
 			int16_t length = nbt_coder_decode_short(coder, order);
 			char* string = malloc(length + 1);
 			nbt_coder_decode_data(coder, string, length);
 			string[length] = '\0';
+			return nbt_create_string(name, string);
 		}
 		case NBT_LIST: {
 			nbt_type_t list_type = nbt_coder_decode_byte(coder);

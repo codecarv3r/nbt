@@ -46,5 +46,5 @@ int main(int argc, const char * argv[]) {
 	char* print = nbt_print(tag, NBT_STYLE_PIPE);
 	printf("%s\n", print);
 	nbt_destroy(tag);
-    return 0;
+	return 0;
 }

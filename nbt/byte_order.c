@@ -120,4 +120,3 @@ double nbt_reorder_double(double value, nbt_byte_order_t byte_order) {
 		return value;
 	}
 }
-

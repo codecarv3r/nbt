@@ -9,6 +9,7 @@ A c99 library called [cNBT](https://github.com/FliPPeh/cNBT) for manipulating da
 * Tree manipulation
 * Printing with indentation
 * Printing with pipes
+* Printing with colors
 * A very basic application which will print a file's nbt tree
 
 ##Future Features

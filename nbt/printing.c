@@ -28,6 +28,7 @@
  */
 
 #include "internal.h"
+#include "colors.h"
 
 #ifndef __printflike
 # define __printflike(a, b)
@@ -55,6 +56,7 @@ char* _nbt_spaces(size_t count);
 
 char* _nbt_print_original(nbt_t* tag, int tab_count);
 char* _nbt_print_pipe(nbt_t* tag, const char* start_string);
+char* _nbt_print_color(nbt_t* tag, int tab_count);
 
 char* nbt_print(nbt_t* tag, nbt_print_style_t style) {
 	switch (style) {
@@ -64,6 +66,8 @@ char* nbt_print(nbt_t* tag, nbt_print_style_t style) {
 		case NBT_STYLE_PIPE:
 			return _nbt_print_pipe(tag, "");
 			break;
+		case NBT_STYLE_COLOR:
+			return _nbt_print_color(tag, 0);
 	}
 }
 
@@ -287,5 +291,82 @@ char* _nbt_print_pipe(nbt_t* tag, const char* start_string) {
 		}
 	}
 	free(start);
+	return print;
+}
+
+char* _nbt_print_color(nbt_t* tag, int tab_count) {
+	char* start;
+	if (tag->name) {
+		start = _nbt_printf(XLBLUE "%s" XYELLOW "(" "\x1b[38;5;208m" "\"%s\"" XYELLOW ")" RESET, _nbt_type_names[tag->type], tag->name);
+	} else {
+		start = _nbt_printf(XLBLUE "%s" RESET, _nbt_type_names[tag->type]);
+	}
+	char* tabs = _nbt_tabs(tab_count);
+	char* print;
+	switch (tag->type) {
+		case NBT_END:
+			print = strdup("");
+			break;
+		case NBT_BYTE:
+			print = _nbt_printf("%s%s: %d\n", tabs, start, tag->payload.tag_byte);
+			break;
+		case NBT_SHORT:
+			print = _nbt_printf("%s%s: %d\n", tabs, start, tag->payload.tag_short);
+			break;
+		case NBT_INT:
+			print = _nbt_printf("%s%s: %d\n", tabs, start, tag->payload.tag_int);
+			break;
+		case NBT_LONG:
+			print = _nbt_printf("%s%s: %lld\n", tabs, start, tag->payload.tag_long);
+			break;
+		case NBT_FLOAT:
+			print = _nbt_printf("%s%s: %f\n", tabs, start, tag->payload.tag_float);
+			break;
+		case NBT_DOUBLE:
+			print = _nbt_printf("%s%s: %lf\n", tabs, start, tag->payload.tag_double);
+			break;
+		case NBT_STRING:
+			print = _nbt_printf("%s%s: %s\n", tabs, start, tag->payload.tag_string);
+			break;
+		case NBT_BYTE_ARRAY:
+			print = _nbt_printf("%s%s: [%d bytes]\n", tabs, start, tag->payload.tag_byte_array.length);
+			break;
+		case NBT_INT_ARRAY:
+			print = _nbt_printf("%s%s: [%d ints]\n", tabs, start, tag->payload.tag_int_array.length);
+			break;
+		case NBT_LIST:
+		{
+			print = _nbt_printf("%s%s: %d entries of type " XLBLUE "%s" XLBLUE "\n%s" XYELLOW "{" RESET "\n", tabs, start, nbt_list_count(tag), _nbt_type_names[tag->payload.tag_list.type], tabs);
+			nbt_t* item = tag->payload.tag_list.tree;
+			char* temp;
+			do {
+				char* next = _nbt_print_color(item, tab_count + 1);
+				temp = _nbt_printf("%s%s", print, next);
+				free(print);
+				free(next);
+				print = temp;
+			} while ((item = item->tree_right));
+			temp = _nbt_printf("%s%s" XYELLOW "}" RESET "\n", print, tabs);
+			free(print);
+			print = temp;
+			break;
+		}
+		case NBT_COMPOUND:
+			print = _nbt_printf("%s%s: %d entries\n%s" XYELLOW "{" RESET "\n", tabs, start, _nbt_tree_count(tag->payload.tag_compound), tabs);
+			nbt_t* item = tag->payload.tag_compound;
+			char* temp;
+			do {
+				char* next = _nbt_print_color(item, tab_count + 1);
+				temp = _nbt_printf("%s%s", print, next);
+				free(print);
+				free(next);
+				print = temp;
+			} while ((item = item->tree_right));
+			temp = _nbt_printf("%s%s" XYELLOW "}" RESET "\n", print, tabs);
+			free(print);
+			print = temp;
+			break;
+	}
+	free(tabs);
 	return print;
 }

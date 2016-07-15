@@ -43,8 +43,8 @@ int main(int argc, const char * argv[]) {
 	nbt_status_t status;
 	nbt_t* tag = nbt_parse_data(data, size, NBT_BIG_ENDIAN, &status);
 	free(data);
-	char* print = nbt_print(tag, NBT_STYLE_PIPE);
-	printf("%s\n", print);
+	char* print = nbt_print(tag, NBT_STYLE_COLOR);
+	printf("%s", print);
 	nbt_destroy(tag);
 	return 0;
 }

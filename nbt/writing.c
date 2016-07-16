@@ -97,12 +97,11 @@ void _nbt_write_payload(nbt_t* tag, nbt_coder_t* coder, nbt_byte_order_t order) 
 			break;
 		}
 		case NBT_COMPOUND: {
-			nbt_coder_encode_byte(coder, tag->payload.tag_list.type);
-			nbt_coder_encode_int(coder, _nbt_tree_count(tag->payload.tag_compound), order);
 			nbt_t* next = tag->payload.tag_compound;
 			do {
-				_nbt_write_payload(next, coder, order);
+				_nbt_write_data(next, coder, order);
 			} while ((next = next->tree_right));
+			nbt_coder_encode_byte(coder, 0);
 			break;
 		}
 	}

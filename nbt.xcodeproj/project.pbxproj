@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1E42DD491D3AD7D70099C19D /* dump.c in Sources */ = {isa = PBXBuildFile; fileRef = 1E42DD471D3AD7D70099C19D /* dump.c */; };
+		1E42DD4B1D3ADADA0099C19D /* help.c in Sources */ = {isa = PBXBuildFile; fileRef = 1E42DD4A1D3ADADA0099C19D /* help.c */; };
+		1E42DD4C1D3AE1980099C19D /* libnbt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EE7F1211D32F783007E6BBD /* libnbt.a */; };
 		1EA07E7F1D3AD23F00A996F5 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 1EA07E7E1D3AD23F00A996F5 /* main.c */; };
 		1EB08C541D34528F00943B54 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 1EB08C531D34528F00943B54 /* main.c */; };
 		1EB08C581D3452AA00943B54 /* libnbt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EE7F1211D32F783007E6BBD /* libnbt.a */; };
@@ -22,6 +25,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		1E42DD4D1D3AE19B0099C19D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1EE7F1191D32F783007E6BBD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1EE7F1201D32F783007E6BBD;
+			remoteInfo = nbt;
+		};
 		1EB08C591D3452AD00943B54 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 1EE7F1191D32F783007E6BBD /* Project object */;
@@ -53,6 +63,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1E42DD471D3AD7D70099C19D /* dump.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dump.c; sourceTree = "<group>"; };
+		1E42DD481D3AD7D70099C19D /* commands.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = commands.h; sourceTree = "<group>"; };
+		1E42DD4A1D3ADADA0099C19D /* help.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = help.c; sourceTree = "<group>"; };
 		1E4A64741D35727D00673761 /* level.nbt */ = {isa = PBXFileReference; lastKnownFileType = file; path = level.nbt; sourceTree = "<group>"; };
 		1E4A64751D35727D00673761 /* level_unzipped.nbt */ = {isa = PBXFileReference; lastKnownFileType = file; path = level_unzipped.nbt; sourceTree = "<group>"; };
 		1E4A64761D35727D00673761 /* NBT.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = NBT.txt; sourceTree = "<group>"; };
@@ -80,6 +93,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1E42DD4C1D3AE1980099C19D /* libnbt.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -124,6 +138,9 @@
 			isa = PBXGroup;
 			children = (
 				1EA07E7E1D3AD23F00A996F5 /* main.c */,
+				1E42DD481D3AD7D70099C19D /* commands.h */,
+				1E42DD471D3AD7D70099C19D /* dump.c */,
+				1E42DD4A1D3ADADA0099C19D /* help.c */,
 			);
 			path = nbtutil;
 			sourceTree = "<group>";
@@ -202,6 +219,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				1E42DD4E1D3AE19B0099C19D /* PBXTargetDependency */,
 			);
 			name = nbtutil;
 			productName = nbtutil;
@@ -296,7 +314,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1E42DD4B1D3ADADA0099C19D /* help.c in Sources */,
 				1EA07E7F1D3AD23F00A996F5 /* main.c in Sources */,
+				1E42DD491D3AD7D70099C19D /* dump.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -324,6 +344,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		1E42DD4E1D3AE19B0099C19D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1EE7F1201D32F783007E6BBD /* nbt */;
+			targetProxy = 1E42DD4D1D3AE19B0099C19D /* PBXContainerItemProxy */;
+		};
 		1EB08C5A1D3452AD00943B54 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 1EE7F1201D32F783007E6BBD /* nbt */;
@@ -473,6 +498,7 @@
 				1EA07E821D3AD23F00A996F5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		1EB08C571D34528F00943B54 /* Build configuration list for PBXNativeTarget "nbt_dump" */ = {
 			isa = XCConfigurationList;

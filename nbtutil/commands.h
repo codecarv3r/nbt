@@ -6,7 +6,7 @@
  *  |  | \    |    (_) |  |  |
  *  |__|  \___|__|\____/  |__|
  *
- *  main.c
+ *  commands.h
  *  This file is part of nbt.
  *
  *  Created by Silas Schwarz on 7/16/16.
@@ -27,35 +27,16 @@
  *
  */
 
+#ifndef dump_h
+#define dump_h
+
 #include <stdio.h>
-#include <string.h>
 
-#include "commands.h"
+__BEGIN_DECLS
 
-void usage(const char* command_call);
+int dump_main(int argc, const char* argv[]);
+int help_main(int argc, const char* argv[]);
 
-int main(int argc, const char * argv[]) {
-	if (argc < 2) {
-		usage(argv[0]);
-		return 0;
-	}
-	if (!strcmp(argv[1], "dump")) {
-		return dump_main(argc, argv);
-	} else if (!strcmp(argv[1], "help")) {
-		return help_main(argc, argv);
-	} else {
-		printf("Unknown command: %s\n", argv[1]);
-		usage(argv[0]);
-		return 1;
-	}
-    return 0;
-}
+__END_DECLS
 
-void usage(const char* command_call) {
-	printf(
-		   "Usage: %s <command> <options>...\n"
-		   "\tCommands:\n"
-		   "\t\thelp [-c <command>]\t\tshow this message, or help for a specific command\n"
-		   "\t\tdump -p <path> [-s <style]\tdump a readable form of the nbt data at <path>\n",
-		   command_call);
-}
+#endif /* dump_h */

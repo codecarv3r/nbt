@@ -30,18 +30,17 @@
 #include "internal.h"
 #include "coder.h"
 
-nbt_t* _nbt_parse_coder(nbt_coder_t* coder, nbt_byte_order_t order, nbt_status_t* errorp);
 nbt_t* _nbt_parse_payload(nbt_type_t type, const char* name, nbt_coder_t* coder, nbt_byte_order_t order, nbt_status_t* errorp);
 
 nbt_t* nbt_parse_data(const char* bytes, size_t length, nbt_byte_order_t order, nbt_status_t* errorp) {
 	nbt_coder_t* coder = nbt_coder_create();
 	nbt_coder_initialize_decoder(coder, bytes, length);
-	nbt_t* tag = _nbt_parse_coder(coder, order, errorp);
+	nbt_t* tag = nbt_parse_coder(coder, order, errorp);
 	nbt_coder_destroy(coder);
 	return tag;
 }
 
-nbt_t* _nbt_parse_coder(nbt_coder_t* coder, nbt_byte_order_t order, nbt_status_t* errorp) {
+nbt_t* nbt_parse_coder(nbt_coder_t* coder, nbt_byte_order_t order, nbt_status_t* errorp) {
 	nbt_type_t type = nbt_coder_decode_byte(coder);
 	if (!type) {
 		return NULL;
@@ -104,7 +103,7 @@ nbt_t* _nbt_parse_payload(nbt_type_t type, const char* name, nbt_coder_t* coder,
 		case NBT_COMPOUND: {
 			nbt_t* tag = nbt_create_compound(name);
 			nbt_t* next = NULL;
-			while ((next = _nbt_parse_coder(coder, order, errorp))) {
+			while ((next = nbt_parse_coder(coder, order, errorp))) {
 				nbt_compound_set(tag, next);
 			}
 			return tag;

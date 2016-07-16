@@ -45,6 +45,8 @@ int main(int argc, const char * argv[]) {
 	free(data);
 	char* print = nbt_print(tag, NBT_STYLE_COLOR);
 	printf("%s", print);
+	nbt_coder_t* coder = nbt_write_data(tag, NBT_BIG_ENDIAN);
+	nbt_coder_write_file(coder, "/Users/silas/Desktop/level_unzipped_rewritten.nbt");
 	nbt_destroy(tag);
 	return 0;
 }

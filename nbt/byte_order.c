@@ -50,7 +50,7 @@ void nbt_swap(void* data, size_t length) {
 }
 
 int16_t nbt_swap_short(int16_t value) {
-	return (value << 8) | (value >> 8);
+	return ((value & 0x00FF) << 8) | ((value & 0xFF00) >> 8);
 }
 
 int32_t nbt_swap_int(int32_t value) {

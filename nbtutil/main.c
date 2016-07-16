@@ -9,7 +9,7 @@
  *  main.c
  *  This file is part of nbt.
  *
- *  Created by Silas Schwarz on 7/11/16.
+ *  Created by Silas Schwarz on 7/16/16.
  *  Copyright (c) 2016 ZCodeMT LLC.
  *
  *  nbt is free software: you can redistribute it and/or modify
@@ -27,26 +27,8 @@
  *
  */
 
-#include <stdlib.h>
 #include <stdio.h>
 
-#include "nbt.h"
-
 int main(int argc, const char * argv[]) {
-	FILE* fp = fopen("/Users/silas/Code/nbt/test_data/level_unzipped.nbt", "r");
-	fseek(fp, 0, SEEK_END);
-	size_t size = ftell(fp);
-	fseek(fp, 0, SEEK_SET);
-	char* data = malloc(size);
-	fread(data, size, 1, fp);
-	fclose(fp);
-	nbt_status_t status;
-	nbt_t* tag = nbt_parse_data(data, size, NBT_BIG_ENDIAN, &status);
-	free(data);
-	char* print = nbt_print(tag, NBT_STYLE_COLOR);
-	printf("%s", print);
-	nbt_coder_t* coder = nbt_write_data(tag, NBT_BIG_ENDIAN);
-	nbt_coder_write_file(coder, "/Users/silas/Desktop/level_unzipped_rewritten.nbt");
-	nbt_destroy(tag);
-	return 0;
+    return 0;
 }

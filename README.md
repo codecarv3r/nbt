@@ -17,7 +17,6 @@ A c99 library called [cNBT](https://github.com/FliPPeh/cNBT) for manipulating da
 ##Future Features
 * Consistant API
 * Graceful failure for corrupt data
-* Colorful print style
 * Command line NBT data editor
 
 ##Prerequisites

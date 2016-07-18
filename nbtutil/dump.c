@@ -104,14 +104,14 @@ int dump_main(int argc, const char* argv[]) {
 		}
 		free(endian);
 	}
-	nbt_coder_t* coder = nbt_coder_read_file(path);
+	nbt_coder_t* coder = nbt_coder_create_file(path);
 	free(path);
 	nbt_status_t error = NBT_SUCCESS;
 	nbt_t* tag = nbt_parse_coder(coder, order, compressed, &error);
-	nbt_coder_destroy(coder);
+	nbt_coder_release(coder);
 	assert(!error);
 	char* dump = nbt_print(tag, print_style);
 	printf("%s", dump);
-	nbt_destroy(tag);
+	nbt_release(tag);
 	return 0;
 }

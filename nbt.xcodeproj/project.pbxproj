@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1E157A751D3D7CEC0065005F /* coder.c in Sources */ = {isa = PBXBuildFile; fileRef = 1E157A731D3D7CEC0065005F /* coder.c */; };
+		1E157A761D3D7CEC0065005F /* coder.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E157A741D3D7CEC0065005F /* coder.h */; };
 		1E42DD491D3AD7D70099C19D /* dump.c in Sources */ = {isa = PBXBuildFile; fileRef = 1E42DD471D3AD7D70099C19D /* dump.c */; };
 		1E42DD4B1D3ADADA0099C19D /* help.c in Sources */ = {isa = PBXBuildFile; fileRef = 1E42DD4A1D3ADADA0099C19D /* help.c */; };
 		1E42DD4C1D3AE1980099C19D /* libnbt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EE7F1211D32F783007E6BBD /* libnbt.a */; };
@@ -21,8 +23,6 @@
 		1EF1F9B01D33246600A6FC45 /* parsing.c in Sources */ = {isa = PBXBuildFile; fileRef = 1EF1F9AF1D33246600A6FC45 /* parsing.c */; };
 		1EF1F9B21D33247400A6FC45 /* writing.c in Sources */ = {isa = PBXBuildFile; fileRef = 1EF1F9B11D33247400A6FC45 /* writing.c */; };
 		1EF1F9B51D33251600A6FC45 /* printing.c in Sources */ = {isa = PBXBuildFile; fileRef = 1EF1F9B41D33251600A6FC45 /* printing.c */; };
-		1EF1F9B81D3325C700A6FC45 /* coder.c in Sources */ = {isa = PBXBuildFile; fileRef = 1EF1F9B61D3325C700A6FC45 /* coder.c */; };
-		1EF1F9B91D3325C700A6FC45 /* coder.h in Headers */ = {isa = PBXBuildFile; fileRef = 1EF1F9B71D3325C700A6FC45 /* coder.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +64,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1E157A731D3D7CEC0065005F /* coder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = coder.c; sourceTree = "<group>"; };
+		1E157A741D3D7CEC0065005F /* coder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = coder.h; sourceTree = "<group>"; };
 		1E42DD471D3AD7D70099C19D /* dump.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dump.c; sourceTree = "<group>"; };
 		1E42DD481D3AD7D70099C19D /* commands.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = commands.h; sourceTree = "<group>"; };
 		1E42DD4A1D3ADADA0099C19D /* help.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = help.c; sourceTree = "<group>"; };
@@ -86,8 +88,6 @@
 		1EF1F9B11D33247400A6FC45 /* writing.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = writing.c; sourceTree = "<group>"; };
 		1EF1F9B31D33248000A6FC45 /* internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = internal.h; sourceTree = "<group>"; };
 		1EF1F9B41D33251600A6FC45 /* printing.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = printing.c; sourceTree = "<group>"; };
-		1EF1F9B61D3325C700A6FC45 /* coder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = coder.c; sourceTree = "<group>"; };
-		1EF1F9B71D3325C700A6FC45 /* coder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = coder.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -191,15 +191,15 @@
 			children = (
 				1EE7F12A1D32F811007E6BBD /* nbt.h */,
 				1EF1F9B31D33248000A6FC45 /* internal.h */,
+				1EA07E771D3872F800A996F5 /* colors.h */,
 				1EE7F1291D32F811007E6BBD /* nbt.c */,
 				1EF1F9AF1D33246600A6FC45 /* parsing.c */,
 				1EF1F9B11D33247400A6FC45 /* writing.c */,
 				1EF1F9B41D33251600A6FC45 /* printing.c */,
 				1EF1F9AC1D331DF300A6FC45 /* byte_order.h */,
 				1EF1F9AB1D331DF300A6FC45 /* byte_order.c */,
-				1EF1F9B71D3325C700A6FC45 /* coder.h */,
-				1EF1F9B61D3325C700A6FC45 /* coder.c */,
-				1EA07E771D3872F800A996F5 /* colors.h */,
+				1E157A741D3D7CEC0065005F /* coder.h */,
+				1E157A731D3D7CEC0065005F /* coder.c */,
 			);
 			path = nbt;
 			sourceTree = "<group>";
@@ -211,8 +211,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1EF1F9B91D3325C700A6FC45 /* coder.h in Headers */,
 				1EE7F12C1D32F811007E6BBD /* nbt.h in Headers */,
+				1E157A761D3D7CEC0065005F /* coder.h in Headers */,
 				1EF1F9AE1D331DF300A6FC45 /* byte_order.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -344,10 +344,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1E157A751D3D7CEC0065005F /* coder.c in Sources */,
 				1EF1F9AD1D331DF300A6FC45 /* byte_order.c in Sources */,
 				1EE7F12B1D32F811007E6BBD /* nbt.c in Sources */,
 				1EF1F9B51D33251600A6FC45 /* printing.c in Sources */,
-				1EF1F9B81D3325C700A6FC45 /* coder.c in Sources */,
 				1EF1F9B21D33247400A6FC45 /* writing.c in Sources */,
 				1EF1F9B01D33246600A6FC45 /* parsing.c in Sources */,
 			);

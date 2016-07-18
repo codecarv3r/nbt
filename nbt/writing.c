@@ -36,7 +36,6 @@ void _nbt_write_payload(nbt_t* tag, nbt_coder_t* coder, nbt_byte_order_t order);
 
 nbt_coder_t* nbt_write_data(nbt_t* tag, nbt_byte_order_t order) {
 	nbt_coder_t* coder = nbt_coder_create();
-	nbt_coder_initialize_encoder(coder);
 	_nbt_write_data(tag, coder, order);
 	return coder;
 }

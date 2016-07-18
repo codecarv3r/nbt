@@ -38,22 +38,16 @@ __BEGIN_DECLS
 
 typedef struct _nbt_coder nbt_coder_t;
 
+/* Construction and Destruction */
 nbt_coder_t* nbt_coder_create();
-void nbt_coder_destroy(nbt_coder_t* coder);
-
-const char* nbt_coder_reorder_data(nbt_coder_t* coder, size_t* length);
+nbt_coder_t* nbt_coder_create_file(const char* path);
+nbt_coder_t* nbt_coder_create_data(const char* data, size_t size);
+void nbt_coder_release(nbt_coder_t* coder);
 
 /* File System */
-nbt_coder_t* nbt_coder_read_file(const char* path);
 void nbt_coder_write_file(nbt_coder_t* coder, const char* path);
 
-/* Choose one or the other */
-void nbt_coder_initialize_encoder(nbt_coder_t* coder);
-void nbt_coder_initialize_decoder(nbt_coder_t* coder, const char* data, size_t length);
-void nbt_coder_force_encoder(nbt_coder_t* coder);
-void nbt_coder_force_decoder(nbt_coder_t* coder);
-
-/* Encoder */
+/* Encoding */
 void nbt_coder_encode_byte(nbt_coder_t* coder, int8_t item);
 void nbt_coder_encode_short(nbt_coder_t* coder, int16_t item, nbt_byte_order_t order);
 void nbt_coder_encode_int(nbt_coder_t* coder, int32_t item, nbt_byte_order_t order);
@@ -71,7 +65,7 @@ float nbt_coder_decode_float(nbt_coder_t* coder, nbt_byte_order_t order);
 double nbt_coder_decode_double(nbt_coder_t* coder, nbt_byte_order_t order);
 void nbt_coder_decode_data(nbt_coder_t* coder, char* buffer, size_t length);
 
-/* Compression */
+/* Compression -- not in-place...should it be? */
 typedef enum {
 	NBT_COMPRESSION_GZIP,	/* gzip header -- compress like a level.dat */
 	NBT_COMPRESSION_INFLATE	/* zlib header -- compress like a chunk */

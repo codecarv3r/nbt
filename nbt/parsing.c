@@ -34,10 +34,9 @@ nbt_t* _nbt_parse_payload(nbt_type_t type, const char* name, nbt_coder_t* coder,
 nbt_t* _nbt_parse_coder(nbt_coder_t* coder, nbt_byte_order_t order, nbt_status_t* errorp);
 
 nbt_t* nbt_parse_data(const char* bytes, size_t length, nbt_byte_order_t order, bool compressed, nbt_status_t* errorp) {
-	nbt_coder_t* coder = nbt_coder_create();
-	nbt_coder_initialize_decoder(coder, bytes, length);
+	nbt_coder_t* coder = nbt_coder_create_data(bytes, length);
 	nbt_t* tag = nbt_parse_coder(coder, order, compressed, errorp);
-	nbt_coder_destroy(coder);
+	nbt_coder_release(coder);
 	return tag;
 }
 
@@ -45,7 +44,6 @@ nbt_t* nbt_parse_coder(nbt_coder_t* coder, nbt_byte_order_t order, bool compress
 	if (compressed) {
 		coder = nbt_coder_decompress(coder);
 	}
-	nbt_coder_force_decoder(coder);
 	return _nbt_parse_coder(coder, order, errorp);
 }
 

@@ -87,7 +87,7 @@ nbt_t* nbt_create_list(const char* name, nbt_type_t type);
 nbt_t* nbt_create_compound(const char* name);
 
 /* Don't leak memory, mkay? */
-void nbt_destroy(nbt_t* tag);
+void nbt_release(nbt_t* tag);
 
 /* Parsing */
 nbt_t* nbt_parse_data(const char* bytes, size_t length, nbt_byte_order_t order, bool compressed, nbt_status_t* errorp);

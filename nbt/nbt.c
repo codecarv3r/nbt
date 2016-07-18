@@ -154,7 +154,7 @@ nbt_t* nbt_create_compound(const char* name) {
 	return tag;
 }
 
-void nbt_destroy(nbt_t* tag) {
+void nbt_release(nbt_t* tag) {
 	if (tag) {
 		switch (tag->type) {
 			case NBT_BYTE_ARRAY:
@@ -164,10 +164,10 @@ void nbt_destroy(nbt_t* tag) {
 				free(tag->payload.tag_string);
 				break;
 			case NBT_LIST:
-				nbt_destroy(tag->payload.tag_list.tree);
+				nbt_release(tag->payload.tag_list.tree);
 				break;
 			case NBT_COMPOUND:
-				nbt_destroy(tag->payload.tag_compound);
+				nbt_release(tag->payload.tag_compound);
 				break;
 			case NBT_INT_ARRAY:
 				free(tag->payload.tag_int_array.int_array);
@@ -300,7 +300,7 @@ void _nbt_tree_remove(nbt_t* node) {
 		if (node->tree_right) {
 			node->tree_right->tree_left = node->tree_left;
 		}
-		nbt_destroy(node);
+		nbt_release(node);
 	}
 }
 
@@ -346,7 +346,7 @@ void _nbt_tree_replace(nbt_t* current, nbt_t* replacement) {
 	if (current->tree_right) {
 		current->tree_right->tree_left = replacement;
 	}
-	nbt_destroy(current);
+	nbt_release(current);
 }
 
 void nbt_compound_remove(nbt_t* compound, const char* name) {

@@ -50,6 +50,8 @@ void nbt_coder_write_file(nbt_coder_t* coder, const char* path);
 /* Choose one or the other */
 void nbt_coder_initialize_encoder(nbt_coder_t* coder);
 void nbt_coder_initialize_decoder(nbt_coder_t* coder, const char* data, size_t length);
+void nbt_coder_force_encoder(nbt_coder_t* coder);
+void nbt_coder_force_decoder(nbt_coder_t* coder);
 
 /* Encoder */
 void nbt_coder_encode_byte(nbt_coder_t* coder, int8_t item);
@@ -68,6 +70,14 @@ int64_t nbt_coder_decode_long(nbt_coder_t* coder, nbt_byte_order_t order);
 float nbt_coder_decode_float(nbt_coder_t* coder, nbt_byte_order_t order);
 double nbt_coder_decode_double(nbt_coder_t* coder, nbt_byte_order_t order);
 void nbt_coder_decode_data(nbt_coder_t* coder, char* buffer, size_t length);
+
+/* Compression */
+typedef enum {
+	NBT_COMPRESSION_GZIP,	/* gzip header -- compress like a level.dat */
+	NBT_COMPRESSION_INFLATE	/* zlib header -- compress like a chunk */
+} nbt_compression_strategy_t;
+nbt_coder_t* nbt_coder_compress(nbt_coder_t* coder, nbt_compression_strategy_t compression_strategy);
+nbt_coder_t* nbt_coder_decompress(nbt_coder_t* coder);
 
 __END_DECLS
 

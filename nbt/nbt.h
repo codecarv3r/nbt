@@ -31,6 +31,7 @@
 #define nbt_h
 
 #include <stdio.h>
+#include <stdbool.h>
 
 #include "byte_order.h"
 #include "coder.h"
@@ -89,8 +90,8 @@ nbt_t* nbt_create_compound(const char* name);
 void nbt_destroy(nbt_t* tag);
 
 /* Parsing */
-nbt_t* nbt_parse_data(const char* bytes, size_t length, nbt_byte_order_t order, nbt_status_t* errorp);
-nbt_t* nbt_parse_coder(nbt_coder_t* coder, nbt_byte_order_t order, nbt_status_t* errorp);
+nbt_t* nbt_parse_data(const char* bytes, size_t length, nbt_byte_order_t order, bool compressed, nbt_status_t* errorp);
+nbt_t* nbt_parse_coder(nbt_coder_t* coder, nbt_byte_order_t order, bool compressed, nbt_status_t* errorp);
 
 /* Writing */
 nbt_coder_t* nbt_write_data(nbt_t* tag, nbt_byte_order_t order);

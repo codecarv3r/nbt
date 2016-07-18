@@ -32,6 +32,7 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <string.h>
+#include <zlib.h>
 
 #define NBT_CODER_DEFAULT_CHUNK 128
 
@@ -96,6 +97,17 @@ void nbt_coder_initialize_decoder(nbt_coder_t* coder, const char* data, size_t l
 	coder->length = length;
 	coder->cursor = 0;
 	memcpy(coder->data, data, length);
+}
+
+void nbt_coder_force_encoder(nbt_coder_t* coder) {
+	free(coder->data);
+	memset(coder, 0, sizeof(*coder));
+	nbt_coder_initialize_encoder(coder);
+}
+
+void nbt_coder_force_decoder(nbt_coder_t* coder) {
+	coder->type = DECODER;
+	coder->cursor = 0;
 }
 
 void nbt_coder_encode_byte(nbt_coder_t* coder, int8_t item) {
@@ -213,4 +225,83 @@ void _nbt_coder_reserve(nbt_coder_t* coder, size_t reserved) {
 		} while (coder->reserved < reserved);
 		coder->data = realloc(coder->data, coder->reserved);
 	}
+}
+
+nbt_coder_t* nbt_coder_compress(nbt_coder_t* coder, nbt_compression_strategy_t compression_strategy) {
+	nbt_coder_t* ret_coder = nbt_coder_create();
+	nbt_coder_initialize_encoder(ret_coder);
+	
+	z_stream stream = {
+		.zalloc		= Z_NULL,
+		.zfree		= Z_NULL,
+		.opaque		= Z_NULL,
+		.next_in	= (void*)coder->data,
+		.avail_in	= (uInt)coder->length
+	};
+	
+	/* Should be from 8..15 */
+	int window_bits = 15;
+	
+	/* Or add 16 if we are using a gzip header */
+	if (compression_strategy == NBT_COMPRESSION_GZIP) {
+		window_bits += 16;
+	}
+	
+	/* Start the compression */
+	assert(!deflateInit2(&stream,
+						 Z_DEFAULT_COMPRESSION,
+						 Z_DEFLATED,
+						 15,
+						 8,
+						 Z_DEFAULT_STRATEGY));
+	
+	do {
+		_nbt_coder_reserve(ret_coder, ret_coder->length + NBT_CODER_DEFAULT_CHUNK);
+		
+		stream.next_out = (Bytef*)ret_coder->data + ret_coder->length;
+		stream.avail_out = NBT_CODER_DEFAULT_CHUNK;
+		
+		assert(deflate(&stream, Z_FINISH) != Z_STREAM_ERROR);
+		
+		ret_coder->length += NBT_CODER_DEFAULT_CHUNK - stream.avail_out;
+	} while (stream.avail_out == 0);
+	
+	deflateEnd(&stream);
+	return ret_coder;
+}
+
+nbt_coder_t* nbt_coder_decompress(nbt_coder_t* coder) {
+	nbt_coder_t* ret_coder = nbt_coder_create();
+	nbt_coder_initialize_encoder(ret_coder);
+	
+	z_stream stream = {
+		.zalloc		= Z_NULL,
+		.zfree		= Z_NULL,
+		.opaque		= Z_NULL,
+		.next_in	= (void*)coder->data,
+		.avail_in	= (uInt)coder->length
+	};
+	
+	/* automatic header detection */
+	assert(inflateInit2(&stream, 15 + 32) == Z_OK);
+	
+	int zlib_ret;
+	do {
+		_nbt_coder_reserve(ret_coder, ret_coder->length + NBT_CODER_DEFAULT_CHUNK);
+		
+		stream.avail_out = NBT_CODER_DEFAULT_CHUNK;
+		stream.next_out = (Bytef*)ret_coder->data + ret_coder->length;
+		switch ((zlib_ret = inflate(&stream, Z_NO_FLUSH))) {
+			case Z_MEM_ERROR:
+			case Z_DATA_ERROR:
+			case Z_NEED_DICT:
+				assert(0);
+			default:
+				ret_coder->length += NBT_CODER_DEFAULT_CHUNK - stream.avail_out;
+		}
+	} while (stream.avail_out == 0);
+	
+	assert(zlib_ret == Z_STREAM_END);
+	inflateEnd(&stream);
+	return ret_coder;
 }

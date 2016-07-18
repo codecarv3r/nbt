@@ -31,27 +31,22 @@
 #include "coder.h"
 
 nbt_t* _nbt_parse_payload(nbt_type_t type, const char* name, nbt_coder_t* coder, nbt_byte_order_t order, nbt_status_t* errorp);
+nbt_t* _nbt_parse_coder(nbt_coder_t* coder, nbt_byte_order_t order, nbt_status_t* errorp);
 
-nbt_t* nbt_parse_data(const char* bytes, size_t length, nbt_byte_order_t order, nbt_status_t* errorp) {
+nbt_t* nbt_parse_data(const char* bytes, size_t length, nbt_byte_order_t order, bool compressed, nbt_status_t* errorp) {
 	nbt_coder_t* coder = nbt_coder_create();
 	nbt_coder_initialize_decoder(coder, bytes, length);
-	nbt_t* tag = nbt_parse_coder(coder, order, errorp);
+	nbt_t* tag = nbt_parse_coder(coder, order, compressed, errorp);
 	nbt_coder_destroy(coder);
 	return tag;
 }
 
-nbt_t* nbt_parse_coder(nbt_coder_t* coder, nbt_byte_order_t order, nbt_status_t* errorp) {
-	nbt_type_t type = nbt_coder_decode_byte(coder);
-	if (!type) {
-		return NULL;
+nbt_t* nbt_parse_coder(nbt_coder_t* coder, nbt_byte_order_t order, bool compressed, nbt_status_t* errorp) {
+	if (compressed) {
+		coder = nbt_coder_decompress(coder);
 	}
-	int16_t name_length = nbt_coder_decode_short(coder, order);
-	char* name = malloc(name_length + 1);
-	nbt_coder_decode_data(coder, name, name_length);
-	name[name_length] = '\0';
-	nbt_t* tag = _nbt_parse_payload(type, name, coder, order, errorp);
-	free(name);
-	return tag;
+	nbt_coder_force_decoder(coder);
+	return _nbt_parse_coder(coder, order, errorp);
 }
 
 nbt_t* _nbt_parse_payload(nbt_type_t type, const char* name, nbt_coder_t* coder, nbt_byte_order_t order, nbt_status_t* errorp) {
@@ -103,10 +98,24 @@ nbt_t* _nbt_parse_payload(nbt_type_t type, const char* name, nbt_coder_t* coder,
 		case NBT_COMPOUND: {
 			nbt_t* tag = nbt_create_compound(name);
 			nbt_t* next = NULL;
-			while ((next = nbt_parse_coder(coder, order, errorp))) {
+			while ((next = _nbt_parse_coder(coder, order, errorp))) {
 				nbt_compound_set(tag, next);
 			}
 			return tag;
 		}
 	}
+}
+
+nbt_t* _nbt_parse_coder(nbt_coder_t* coder, nbt_byte_order_t order, nbt_status_t* errorp) {
+	nbt_type_t type = nbt_coder_decode_byte(coder);
+	if (!type) {
+		return NULL;
+	}
+	int16_t name_length = nbt_coder_decode_short(coder, order);
+	char* name = malloc(name_length + 1);
+	nbt_coder_decode_data(coder, name, name_length);
+	name[name_length] = '\0';
+	nbt_t* tag = _nbt_parse_payload(type, name, coder, order, errorp);
+	free(name);
+	return tag;
 }

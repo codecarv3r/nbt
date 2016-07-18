@@ -42,6 +42,7 @@ static const struct option options[] = {
 	{ "endian", required_argument, NULL, 'e' },
 	{ "order", required_argument, NULL, 'e' },
 	{ "byte_order", required_argument, NULL, 'e' },
+	{ "uncompressed", no_argument, NULL, 'u' },
 	{ NULL, 0, NULL, 0 }
 };
 
@@ -51,7 +52,8 @@ int dump_main(int argc, const char* argv[]) {
 	char* style = NULL;
 	char* endian = NULL;
 	int option_index;
-	while ((option = getopt_long(argc - 1, (char*const*)&argv[1], "p:s:e:", options, &option_index)) != -1) {
+	bool compressed = true;
+	while ((option = getopt_long(argc - 1, (char*const*)&argv[1], "p:s:e:u", options, &option_index)) != -1) {
 		switch (option) {
 			case 'p':
 				path = strdup(optarg);
@@ -61,6 +63,9 @@ int dump_main(int argc, const char* argv[]) {
 				break;
 			case 'e':
 				endian = strdup(optarg);
+				break;
+			case 'u':
+				compressed = false;
 				break;
 			case '?':
 				return 1;
@@ -102,7 +107,8 @@ int dump_main(int argc, const char* argv[]) {
 	nbt_coder_t* coder = nbt_coder_read_file(path);
 	free(path);
 	nbt_status_t error = NBT_SUCCESS;
-	nbt_t* tag = nbt_parse_coder(coder, order, &error);
+	nbt_t* tag = nbt_parse_coder(coder, order, compressed, &error);
+	nbt_coder_destroy(coder);
 	assert(!error);
 	char* dump = nbt_print(tag, print_style);
 	printf("%s", dump);

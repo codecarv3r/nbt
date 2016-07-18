@@ -11,10 +11,10 @@ A c99 library called [cNBT](https://github.com/FliPPeh/cNBT) for manipulating da
 * Printing with pipes
 * Printing with colors
 * A very basic application which will print a file's nbt tree
+* Compression support (both read and write)
 
 ##Future Features
 * Write from in-memory tree to binary data
-* Compression support (both read and write)
 * Consistant API
 * Graceful failure for corrupt data
 * Colorful print style

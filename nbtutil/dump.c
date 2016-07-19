@@ -71,6 +71,8 @@ int dump_main(int argc, const char* argv[]) {
 				return 1;
 		}
 	}
+	optind = 1;
+	
 	if (!path) {
 		printf("You forgot to give a path to dump the data from\n");
 		free(path);

@@ -14,8 +14,8 @@
 		1E42DD4C1D3AE1980099C19D /* libnbt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EE7F1211D32F783007E6BBD /* libnbt.a */; };
 		1E4CBCC21D3D414400651752 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E4CBCC11D3D414400651752 /* libz.tbd */; };
 		1E9644191D3DA36500C34799 /* edit.c in Sources */ = {isa = PBXBuildFile; fileRef = 1E9644181D3DA36500C34799 /* edit.c */; };
+		1E9A534A1D3E8D1200267264 /* libedit.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EAA6B7C1D3DAF6400667D52 /* libedit.tbd */; };
 		1EA07E7F1D3AD23F00A996F5 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 1EA07E7E1D3AD23F00A996F5 /* main.c */; };
-		1EAA6B7D1D3DAF6400667D52 /* libedit.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EAA6B7C1D3DAF6400667D52 /* libedit.tbd */; };
 		1EE7F12B1D32F811007E6BBD /* nbt.c in Sources */ = {isa = PBXBuildFile; fileRef = 1EE7F1291D32F811007E6BBD /* nbt.c */; };
 		1EE7F12C1D32F811007E6BBD /* nbt.h in Headers */ = {isa = PBXBuildFile; fileRef = 1EE7F12A1D32F811007E6BBD /* nbt.h */; };
 		1EF1F9AD1D331DF300A6FC45 /* byte_order.c in Sources */ = {isa = PBXBuildFile; fileRef = 1EF1F9AB1D331DF300A6FC45 /* byte_order.c */; };
@@ -79,7 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1EAA6B7D1D3DAF6400667D52 /* libedit.tbd in Frameworks */,
+				1E9A534A1D3E8D1200267264 /* libedit.tbd in Frameworks */,
 				1E4CBCC21D3D414400651752 /* libz.tbd in Frameworks */,
 				1E42DD4C1D3AE1980099C19D /* libnbt.a in Frameworks */,
 			);

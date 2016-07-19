@@ -27,13 +27,21 @@
  *
  */
 
+#ifndef USE_READLINE
+#define USE_READLINE 1
+#endif /* !defined(USE_READLINE) */
+
 #include "commands.h"
 
 #include <assert.h>
+#include <ctype.h>
 #include <getopt.h>
 #include <stdlib.h>
 #include <string.h>
+
+#if USE_READLINE
 #include <editline/readline.h>
+#endif /* USE_READLINE */
 
 #include "colors.h"
 #include "nbt.h"
@@ -48,14 +56,20 @@ static const struct option options[] = {
 	{ NULL, 0, NULL, 0 }
 };
 
-void edit_tag(nbt_t* tag, const char* path);
+char* command_token(const char* command, uintptr_t* index);
+char* prompt_command(const char* prompt);
+void edit_tag(nbt_t* tag, const char* path, bool* exit, bool* no_output);
+
+bool edit_exit_main(size_t argc, const char* argv[], bool* no_output);
+
+#define EXPECTED_MAX_TOKEN 16
 
 int edit_main(int argc, const char* argv[]) {
 	int option;
 	char* path = NULL;
 	char* output = NULL;
 	char* endian = NULL;
-	int option_index;
+	int option_index = 0;
 	bool compressed = true;
 	while ((option = getopt_long(argc - 1, (char*const*)&argv[1], "p:e:uo:", options, &option_index)) != -1) {
 		switch (option) {
@@ -75,6 +89,8 @@ int edit_main(int argc, const char* argv[]) {
 				return 1;
 		}
 	}
+	optind = 1;
+	
 	if (!path) {
 		printf("You forgot to give a path to get data to manipulate\n");
 		free(path);
@@ -104,16 +120,151 @@ int edit_main(int argc, const char* argv[]) {
 	nbt_t* tag = nbt_parse_coder(coder, order, compressed, &error);
 	nbt_coder_release(coder);
 	assert(!error);
-	edit_tag(tag, XLGREEN "/" RESET);
+	
+	bool no_output = false;
+	bool exit = false;
+	edit_tag(tag, "/", &exit, &no_output);
+	
+	if (!no_output) {
+		printf("Outputting...\n");
+	}
+	
 	nbt_release(tag);
+	free(output);
 	return 0;
 }
 
-void edit_tag(nbt_t* tag, const char* path) {
+void edit_tag(nbt_t* tag, const char* path, bool* exit, bool* no_output) {
 	while (true) {
 		char* prompt = nbt_printf(XLRED "[" XLYELLOW " %s " XLRED "] " XLGREEN "> " RESET, path);
-		char* command = readline(prompt);
+		char* command = prompt_command(prompt);
+		
+		char** tokens = malloc(EXPECTED_MAX_TOKEN * sizeof(*tokens));
+		size_t token_count = 0;
+		size_t token_reserved = EXPECTED_MAX_TOKEN;
+		char* token;
+		uintptr_t index = 0;
+		while ((token = command_token(command, &index))) {
+			if (token_count == token_reserved) {
+				token_reserved <<= 1;
+				tokens = realloc(tokens, token_reserved * sizeof(*tokens));
+			}
+			tokens[token_count] = token;
+			token_count++;
+		}
+		if (token_count == token_reserved) {
+			token_reserved <<= 1;
+			tokens = realloc(tokens, token_reserved * sizeof(*tokens));
+		}
+		tokens[token_count] = NULL;
+		
+		bool exit = false;
+		if (!strcmp(tokens[0], "exit")) {
+			exit = edit_exit_main(token_count, (const char **)tokens, no_output);
+		}
+		
+		for (size_t i = 0; i < token_count; i++) {
+			free(tokens[i]);
+		}
+		free(tokens);
+		
+#if USE_READLINE
+		add_history(command);
+#endif /* USE_READLINE */
+		
 		free(prompt);
 		free(command);
+		
+		if (exit) {
+			break;
+		}
 	}
+}
+
+char* command_token(const char* command, uintptr_t* index) {
+	enum {
+		IN_NONE,
+		IN_QUOTE_STRING,
+		IN_QUOTE_CHAR,
+		IN_WORD
+	} state = IN_NONE;
+	intptr_t word_start = -1;
+	while (command[*index]) {
+		unsigned char next = command[*index];
+		switch (state) {
+			case IN_NONE:
+				if (isspace(next)) {
+					break;
+				} else if (next == '"') {
+					state = IN_QUOTE_STRING;
+				} else if (next == '\'') {
+					state = IN_QUOTE_CHAR;
+				} else {
+					state = IN_WORD;
+				}
+				word_start = *index;
+				break;
+			case IN_QUOTE_STRING:
+				if (next == '"') {
+					(*index)++;
+					return strndup(command + word_start + 1, (*index) - word_start - 2);
+				}
+				break;
+			case IN_QUOTE_CHAR:
+				if (next == '\'') {
+					(*index)++;
+					return strndup(command + word_start + 1, (*index) - word_start - 2);
+				}
+				break;
+			case IN_WORD:
+				if (isspace(next)) {
+					(*index)++;
+					return strndup(command + word_start, (*index) - word_start - 1);
+				} else if (next == '"' || next == '\'') {
+					(*index)++;
+					return strndup(command + word_start, (*index) - word_start - 1);
+				}
+				break;
+		}
+		(*index)++;
+	}
+	if (word_start != -1) {
+		return strdup(command + word_start);
+	}
+	return NULL;
+}
+
+#if USE_READLINE
+char* prompt_command(const char* prompt) {
+	return readline(prompt);
+}
+#else
+char* prompt_command(const char* prompt) {
+	printf("%s", prompt);
+	char ret[1024];
+	memset(ret, 0, sizeof(ret));
+	fgets(ret, sizeof(ret), stdin);
+	return strdup(ret);
+}
+#endif /* USE_READLINE */
+
+static const struct option exit_options[] = {
+	{ "no_output", no_argument, NULL, 'n' },
+	{ NULL, 0, NULL, 0 }
+};
+
+bool edit_exit_main(size_t argc, const char* argv[], bool* no_output) {
+	*no_output = false;
+	int option;
+	int option_index = 0;
+	while ((option = getopt_long((int)argc, (char*const*)argv, "n", exit_options, &option_index)) != -1) {
+		switch (option) {
+			case 'n':
+				*no_output = true;
+				break;
+			case '?':
+				break;
+		}
+	}
+	return true;
 }

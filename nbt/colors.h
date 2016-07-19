@@ -32,7 +32,7 @@
 
 #ifndef NBT_USE_COLORS
 #define NBT_USE_COLORS 1
-#endif /* NBT_USE_COLORS */
+#endif /* !defined(NBT_USE_COLORS) */
 
 #if NBT_USE_COLORS
 

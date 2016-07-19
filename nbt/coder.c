@@ -99,6 +99,7 @@ void nbt_coder_encode_byte(nbt_coder_t* coder, int8_t item) {
 	}
 	*(__typeof__(item)*)((uintptr_t)coder->data + coder->cursor) = item;
 	coder->size += sizeof(item);
+	coder->cursor += sizeof(item);
 }
 
 void nbt_coder_encode_short(nbt_coder_t* coder, int16_t item, nbt_byte_order_t order) {
@@ -108,8 +109,9 @@ void nbt_coder_encode_short(nbt_coder_t* coder, int16_t item, nbt_byte_order_t o
 			((int8_t*)((uintptr_t)coder->data + coder->cursor + sizeof(item)))[i] = ((int8_t*)((uintptr_t)coder->data + coder->cursor))[i];
 		}
 	}
-	*(__typeof__(item)*)((uintptr_t)coder->data + coder->cursor) = nbt_reorder_float(item, order);
+	*(__typeof__(item)*)((uintptr_t)coder->data + coder->cursor) = nbt_reorder_short(item, order);
 	coder->size += sizeof(item);
+	coder->cursor += sizeof(item);
 }
 
 void nbt_coder_encode_int(nbt_coder_t* coder, int32_t item, nbt_byte_order_t order) {
@@ -119,8 +121,9 @@ void nbt_coder_encode_int(nbt_coder_t* coder, int32_t item, nbt_byte_order_t ord
 			((int8_t*)((uintptr_t)coder->data + coder->cursor + sizeof(item)))[i] = ((int8_t*)((uintptr_t)coder->data + coder->cursor))[i];
 		}
 	}
-	*(__typeof__(item)*)((uintptr_t)coder->data + coder->cursor) = nbt_reorder_float(item, order);
+	*(__typeof__(item)*)((uintptr_t)coder->data + coder->cursor) = nbt_reorder_int(item, order);
 	coder->size += sizeof(item);
+	coder->cursor += sizeof(item);
 }
 
 void nbt_coder_encode_long(nbt_coder_t* coder, int64_t item, nbt_byte_order_t order) {
@@ -130,8 +133,9 @@ void nbt_coder_encode_long(nbt_coder_t* coder, int64_t item, nbt_byte_order_t or
 			((int8_t*)((uintptr_t)coder->data + coder->cursor + sizeof(item)))[i] = ((int8_t*)((uintptr_t)coder->data + coder->cursor))[i];
 		}
 	}
-	*(__typeof__(item)*)((uintptr_t)coder->data + coder->cursor) = nbt_reorder_float(item, order);
+	*(__typeof__(item)*)((uintptr_t)coder->data + coder->cursor) = nbt_reorder_long(item, order);
 	coder->size += sizeof(item);
+	coder->cursor += sizeof(item);
 }
 
 void nbt_coder_encode_float(nbt_coder_t* coder, float item, nbt_byte_order_t order) {
@@ -143,6 +147,7 @@ void nbt_coder_encode_float(nbt_coder_t* coder, float item, nbt_byte_order_t ord
 	}
 	*(__typeof__(item)*)((uintptr_t)coder->data + coder->cursor) = nbt_reorder_float(item, order);
 	coder->size += sizeof(item);
+	coder->cursor += sizeof(item);
 }
 
 void nbt_coder_encode_double(nbt_coder_t* coder, double item, nbt_byte_order_t order) {
@@ -152,8 +157,9 @@ void nbt_coder_encode_double(nbt_coder_t* coder, double item, nbt_byte_order_t o
 			((int8_t*)((uintptr_t)coder->data + coder->cursor + sizeof(item)))[i] = ((int8_t*)((uintptr_t)coder->data + coder->cursor))[i];
 		}
 	}
-	*(__typeof__(item)*)((uintptr_t)coder->data + coder->cursor) = nbt_reorder_float(item, order);
+	*(__typeof__(item)*)((uintptr_t)coder->data + coder->cursor) = nbt_reorder_double(item, order);
 	coder->size += sizeof(item);
+	coder->cursor += sizeof(item);
 }
 
 void nbt_coder_encode_data(nbt_coder_t* coder, const char* data, size_t length) {
@@ -165,6 +171,7 @@ void nbt_coder_encode_data(nbt_coder_t* coder, const char* data, size_t length) 
 	}
 	memcpy((void*)((uintptr_t)coder->data + coder->cursor), data, length);
 	coder->size += length;
+	coder->cursor += length;
 }
 
 int8_t nbt_coder_decode_byte(nbt_coder_t* coder) {
@@ -257,7 +264,7 @@ nbt_coder_t* nbt_coder_compress(nbt_coder_t* coder, nbt_compression_strategy_t c
 	assert(!deflateInit2(&stream,
 						 Z_DEFAULT_COMPRESSION,
 						 Z_DEFLATED,
-						 15,
+						 window_bits,
 						 8,
 						 Z_DEFAULT_STRATEGY));
 	

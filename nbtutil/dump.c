@@ -100,7 +100,7 @@ int dump_main(int argc, const char* argv[]) {
 		} else if (!strcmp(endian, "big")) {
 			order = NBT_BIG_ENDIAN;
 		} else {
-			printf("Unknown byte order: %s\n", style);
+			printf("Unknown byte order: %s\n", endian);
 		}
 		free(endian);
 	}
@@ -112,6 +112,7 @@ int dump_main(int argc, const char* argv[]) {
 	assert(!error);
 	char* dump = nbt_print(tag, print_style);
 	printf("%s", dump);
+	free(dump);
 	nbt_release(tag);
 	return 0;
 }

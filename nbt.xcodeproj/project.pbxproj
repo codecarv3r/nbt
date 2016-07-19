@@ -15,8 +15,6 @@
 		1E4CBCC21D3D414400651752 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E4CBCC11D3D414400651752 /* libz.tbd */; };
 		1E9644191D3DA36500C34799 /* edit.c in Sources */ = {isa = PBXBuildFile; fileRef = 1E9644181D3DA36500C34799 /* edit.c */; };
 		1EA07E7F1D3AD23F00A996F5 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 1EA07E7E1D3AD23F00A996F5 /* main.c */; };
-		1EB08C541D34528F00943B54 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 1EB08C531D34528F00943B54 /* main.c */; };
-		1EB08C581D3452AA00943B54 /* libnbt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EE7F1211D32F783007E6BBD /* libnbt.a */; };
 		1EE7F12B1D32F811007E6BBD /* nbt.c in Sources */ = {isa = PBXBuildFile; fileRef = 1EE7F1291D32F811007E6BBD /* nbt.c */; };
 		1EE7F12C1D32F811007E6BBD /* nbt.h in Headers */ = {isa = PBXBuildFile; fileRef = 1EE7F12A1D32F811007E6BBD /* nbt.h */; };
 		1EF1F9AD1D331DF300A6FC45 /* byte_order.c in Sources */ = {isa = PBXBuildFile; fileRef = 1EF1F9AB1D331DF300A6FC45 /* byte_order.c */; };
@@ -34,26 +32,10 @@
 			remoteGlobalIDString = 1EE7F1201D32F783007E6BBD;
 			remoteInfo = nbt;
 		};
-		1EB08C591D3452AD00943B54 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 1EE7F1191D32F783007E6BBD /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 1EE7F1201D32F783007E6BBD;
-			remoteInfo = nbt;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		1EA07E7A1D3AD23F00A996F5 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-		};
-		1EB08C4F1D34528F00943B54 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = /usr/share/man/man1/;
@@ -79,8 +61,6 @@
 		1EA07E771D3872F800A996F5 /* colors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = colors.h; sourceTree = "<group>"; };
 		1EA07E7C1D3AD23F00A996F5 /* nbtutil */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = nbtutil; sourceTree = BUILT_PRODUCTS_DIR; };
 		1EA07E7E1D3AD23F00A996F5 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
-		1EB08C511D34528F00943B54 /* nbt_dump */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = nbt_dump; sourceTree = BUILT_PRODUCTS_DIR; };
-		1EB08C531D34528F00943B54 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		1EE7F1211D32F783007E6BBD /* libnbt.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libnbt.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		1EE7F1291D32F811007E6BBD /* nbt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = nbt.c; sourceTree = "<group>"; };
 		1EE7F12A1D32F811007E6BBD /* nbt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nbt.h; sourceTree = "<group>"; };
@@ -99,14 +79,6 @@
 			files = (
 				1E4CBCC21D3D414400651752 /* libz.tbd in Frameworks */,
 				1E42DD4C1D3AE1980099C19D /* libnbt.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		1EB08C4E1D34528F00943B54 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				1EB08C581D3452AA00943B54 /* libnbt.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -159,19 +131,10 @@
 			path = nbtutil;
 			sourceTree = "<group>";
 		};
-		1EB08C521D34528F00943B54 /* nbt_dump */ = {
-			isa = PBXGroup;
-			children = (
-				1EB08C531D34528F00943B54 /* main.c */,
-			);
-			path = nbt_dump;
-			sourceTree = "<group>";
-		};
 		1EE7F1181D32F783007E6BBD = {
 			isa = PBXGroup;
 			children = (
 				1EE7F1281D32F7DB007E6BBD /* nbt */,
-				1EB08C521D34528F00943B54 /* nbt_dump */,
 				1EA07E7D1D3AD23F00A996F5 /* nbtutil */,
 				1E4A64721D35725A00673761 /* extra */,
 				1EE7F1221D32F783007E6BBD /* Products */,
@@ -183,7 +146,6 @@
 			isa = PBXGroup;
 			children = (
 				1EE7F1211D32F783007E6BBD /* libnbt.a */,
-				1EB08C511D34528F00943B54 /* nbt_dump */,
 				1EA07E7C1D3AD23F00A996F5 /* nbtutil */,
 			);
 			name = Products;
@@ -241,24 +203,6 @@
 			productReference = 1EA07E7C1D3AD23F00A996F5 /* nbtutil */;
 			productType = "com.apple.product-type.tool";
 		};
-		1EB08C501D34528F00943B54 /* nbt_dump */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 1EB08C571D34528F00943B54 /* Build configuration list for PBXNativeTarget "nbt_dump" */;
-			buildPhases = (
-				1EB08C4D1D34528F00943B54 /* Sources */,
-				1EB08C4E1D34528F00943B54 /* Frameworks */,
-				1EB08C4F1D34528F00943B54 /* CopyFiles */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				1EB08C5A1D3452AD00943B54 /* PBXTargetDependency */,
-			);
-			name = nbt_dump;
-			productName = nbt_dump;
-			productReference = 1EB08C511D34528F00943B54 /* nbt_dump */;
-			productType = "com.apple.product-type.tool";
-		};
 		1EE7F1201D32F783007E6BBD /* nbt */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1EE7F1251D32F783007E6BBD /* Build configuration list for PBXNativeTarget "nbt" */;
@@ -291,12 +235,6 @@
 						DevelopmentTeamName = "Silas Schwarz (Personal Team)";
 						ProvisioningStyle = Automatic;
 					};
-					1EB08C501D34528F00943B54 = {
-						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = 699SNF33Y8;
-						DevelopmentTeamName = "Silas Schwarz (Personal Team)";
-						ProvisioningStyle = Automatic;
-					};
 					1EE7F1201D32F783007E6BBD = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = 699SNF33Y8;
@@ -318,7 +256,6 @@
 			projectRoot = "";
 			targets = (
 				1EE7F1201D32F783007E6BBD /* nbt */,
-				1EB08C501D34528F00943B54 /* nbt_dump */,
 				1EA07E7B1D3AD23F00A996F5 /* nbtutil */,
 			);
 		};
@@ -333,14 +270,6 @@
 				1E9644191D3DA36500C34799 /* edit.c in Sources */,
 				1EA07E7F1D3AD23F00A996F5 /* main.c in Sources */,
 				1E42DD491D3AD7D70099C19D /* dump.c in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		1EB08C4D1D34528F00943B54 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				1EB08C541D34528F00943B54 /* main.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -365,11 +294,6 @@
 			target = 1EE7F1201D32F783007E6BBD /* nbt */;
 			targetProxy = 1E42DD4D1D3AE19B0099C19D /* PBXContainerItemProxy */;
 		};
-		1EB08C5A1D3452AD00943B54 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 1EE7F1201D32F783007E6BBD /* nbt */;
-			targetProxy = 1EB08C591D3452AD00943B54 /* PBXContainerItemProxy */;
-		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
@@ -381,20 +305,6 @@
 			name = Debug;
 		};
 		1EA07E821D3AD23F00A996F5 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
-		1EB08C551D34528F00943B54 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		1EB08C561D34528F00943B54 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -512,15 +422,6 @@
 			buildConfigurations = (
 				1EA07E811D3AD23F00A996F5 /* Debug */,
 				1EA07E821D3AD23F00A996F5 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		1EB08C571D34528F00943B54 /* Build configuration list for PBXNativeTarget "nbt_dump" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				1EB08C551D34528F00943B54 /* Debug */,
-				1EB08C561D34528F00943B54 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

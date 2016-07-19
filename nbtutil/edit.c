@@ -33,7 +33,9 @@
 #include <getopt.h>
 #include <stdlib.h>
 #include <string.h>
+#include <editline/readline.h>
 
+#include "colors.h"
 #include "nbt.h"
 
 static const struct option options[] = {
@@ -45,6 +47,8 @@ static const struct option options[] = {
 	{ "output", required_argument, NULL, 'o' },
 	{ NULL, 0, NULL, 0 }
 };
+
+void edit_tag(nbt_t* tag, const char* path);
 
 int edit_main(int argc, const char* argv[]) {
 	int option;
@@ -100,9 +104,16 @@ int edit_main(int argc, const char* argv[]) {
 	nbt_t* tag = nbt_parse_coder(coder, order, compressed, &error);
 	nbt_coder_release(coder);
 	assert(!error);
-	
-	
-	
+	edit_tag(tag, XLGREEN "/" RESET);
 	nbt_release(tag);
 	return 0;
+}
+
+void edit_tag(nbt_t* tag, const char* path) {
+	while (true) {
+		char* prompt = nbt_printf(XLRED "[" XLYELLOW " %s " XLRED "] " XLGREEN "> " RESET, path);
+		char* command = readline(prompt);
+		free(prompt);
+		free(command);
+	}
 }

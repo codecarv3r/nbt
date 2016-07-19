@@ -15,6 +15,7 @@
 		1E4CBCC21D3D414400651752 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E4CBCC11D3D414400651752 /* libz.tbd */; };
 		1E9644191D3DA36500C34799 /* edit.c in Sources */ = {isa = PBXBuildFile; fileRef = 1E9644181D3DA36500C34799 /* edit.c */; };
 		1EA07E7F1D3AD23F00A996F5 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 1EA07E7E1D3AD23F00A996F5 /* main.c */; };
+		1EAA6B7D1D3DAF6400667D52 /* libedit.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EAA6B7C1D3DAF6400667D52 /* libedit.tbd */; };
 		1EE7F12B1D32F811007E6BBD /* nbt.c in Sources */ = {isa = PBXBuildFile; fileRef = 1EE7F1291D32F811007E6BBD /* nbt.c */; };
 		1EE7F12C1D32F811007E6BBD /* nbt.h in Headers */ = {isa = PBXBuildFile; fileRef = 1EE7F12A1D32F811007E6BBD /* nbt.h */; };
 		1EF1F9AD1D331DF300A6FC45 /* byte_order.c in Sources */ = {isa = PBXBuildFile; fileRef = 1EF1F9AB1D331DF300A6FC45 /* byte_order.c */; };
@@ -61,6 +62,7 @@
 		1EA07E771D3872F800A996F5 /* colors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = colors.h; sourceTree = "<group>"; };
 		1EA07E7C1D3AD23F00A996F5 /* nbtutil */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = nbtutil; sourceTree = BUILT_PRODUCTS_DIR; };
 		1EA07E7E1D3AD23F00A996F5 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		1EAA6B7C1D3DAF6400667D52 /* libedit.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libedit.tbd; path = usr/lib/libedit.tbd; sourceTree = SDKROOT; };
 		1EE7F1211D32F783007E6BBD /* libnbt.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libnbt.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		1EE7F1291D32F811007E6BBD /* nbt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = nbt.c; sourceTree = "<group>"; };
 		1EE7F12A1D32F811007E6BBD /* nbt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nbt.h; sourceTree = "<group>"; };
@@ -77,6 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1EAA6B7D1D3DAF6400667D52 /* libedit.tbd in Frameworks */,
 				1E4CBCC21D3D414400651752 /* libz.tbd in Frameworks */,
 				1E42DD4C1D3AE1980099C19D /* libnbt.a in Frameworks */,
 			);
@@ -114,6 +117,7 @@
 		1E4CBCC01D3D414400651752 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1EAA6B7C1D3DAF6400667D52 /* libedit.tbd */,
 				1E4CBCC11D3D414400651752 /* libz.tbd */,
 			);
 			name = Frameworks;

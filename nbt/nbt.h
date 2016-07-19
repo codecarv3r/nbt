@@ -129,6 +129,9 @@ typedef enum {
 
 char* nbt_print(nbt_t* tag, nbt_print_style_t style);
 
+char* nbt_printf(const char* format, ...) __printflike(1, 2);
+char* nbt_vprintf(const char* format, va_list ap) __printflike(1, 0);
+
 __END_DECLS
 
 #endif /* nbt_h */

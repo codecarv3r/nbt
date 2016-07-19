@@ -30,6 +30,12 @@
 #ifndef colors_h
 #define colors_h
 
+#ifndef NBT_USE_COLORS
+#define NBT_USE_COLORS 1
+#endif /* NBT_USE_COLORS */
+
+#if NBT_USE_COLORS
+
 #define RESET			"\x1b[00m"
 
 #define BLACK			"\x1b[30m"
@@ -71,5 +77,51 @@
 #define XRGREEN		"\x1b[38;5;002m"
 #define XRBLUE		"\x1b[38;5;020m"
 #define XRPURPLE	"\x1b[38;5;093m"
+
+#else
+
+#define RESET			""
+
+#define BLACK			""
+#define RED				""
+#define GREEN			""
+#define YELLOW			""
+#define BLUE			""
+#define MAGENTA			""
+#define CYAN			""
+#define LIGHT_BLACK		""
+#define LIGHT_RED		""
+#define LIGHT_GREEN		""
+#define LIGHT_YELLOW	""
+#define LIGHT_BLUE		""
+#define LIGHT_MAGENTA	""
+#define LIGHT_CYAN		""
+#define LIGHT_WHITE		""
+
+#define XBLACK		""
+#define XRED		""
+#define XGREEN		""
+#define XYELLOW		""
+#define XBLUE		""
+#define XMAGENTA	""
+#define XCYAN		""
+#define XWHITE		""
+#define XLBLACK		""
+#define XLRED		""
+#define XLGREEN		""
+#define XLYELLOW	""
+#define XLBLUE		""
+#define XLMAGENTA	""
+#define XLCYAN		""
+#define XLWHITE		""
+
+#define XRRED		""
+#define XRORANGE	""
+#define XRYELLOW	""
+#define XRGREEN		""
+#define XRBLUE		""
+#define XRPURPLE	""
+
+#endif /* NBT_USE_COLORS */
 
 #endif /* colors_h */

@@ -43,6 +43,8 @@ int main(int argc, const char * argv[]) {
 		return dump_main(argc, argv);
 	} else if (!strcmp(argv[1], "help")) {
 		return help_main(argc, argv);
+	} else if (!strcmp(argv[1], "edit")) {
+		return edit_main(argc, argv);
 	} else {
 		printf("Unknown command: %s\n", argv[1]);
 		usage(argv[0]);
@@ -56,6 +58,7 @@ void usage(const char* command_call) {
 		   "Usage: %s <command> <options>...\n"
 		   "\tCommands:\n"
 		   "\t\thelp [-c <command>]\t\tshow this message, or help for a specific command\n"
+		   "\t\tedit -p <path> \t\t\tenter an interactive mode for editing nbt data\n"
 		   "\t\tdump -p <path> [-s <style]\tdump a readable form of the nbt data at <path>\n",
 		   command_call);
 }

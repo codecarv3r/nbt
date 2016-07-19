@@ -13,6 +13,7 @@
 		1E42DD4B1D3ADADA0099C19D /* help.c in Sources */ = {isa = PBXBuildFile; fileRef = 1E42DD4A1D3ADADA0099C19D /* help.c */; };
 		1E42DD4C1D3AE1980099C19D /* libnbt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EE7F1211D32F783007E6BBD /* libnbt.a */; };
 		1E4CBCC21D3D414400651752 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E4CBCC11D3D414400651752 /* libz.tbd */; };
+		1E9644191D3DA36500C34799 /* edit.c in Sources */ = {isa = PBXBuildFile; fileRef = 1E9644181D3DA36500C34799 /* edit.c */; };
 		1EA07E7F1D3AD23F00A996F5 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 1EA07E7E1D3AD23F00A996F5 /* main.c */; };
 		1EB08C541D34528F00943B54 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 1EB08C531D34528F00943B54 /* main.c */; };
 		1EB08C581D3452AA00943B54 /* libnbt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EE7F1211D32F783007E6BBD /* libnbt.a */; };
@@ -74,6 +75,7 @@
 		1E4A64761D35727D00673761 /* NBT.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = NBT.txt; sourceTree = "<group>"; };
 		1E4A64771D35727D00673761 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		1E4CBCC11D3D414400651752 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		1E9644181D3DA36500C34799 /* edit.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = edit.c; sourceTree = "<group>"; };
 		1EA07E771D3872F800A996F5 /* colors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = colors.h; sourceTree = "<group>"; };
 		1EA07E7C1D3AD23F00A996F5 /* nbtutil */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = nbtutil; sourceTree = BUILT_PRODUCTS_DIR; };
 		1EA07E7E1D3AD23F00A996F5 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
@@ -151,6 +153,7 @@
 				1EA07E7E1D3AD23F00A996F5 /* main.c */,
 				1E42DD481D3AD7D70099C19D /* commands.h */,
 				1E42DD471D3AD7D70099C19D /* dump.c */,
+				1E9644181D3DA36500C34799 /* edit.c */,
 				1E42DD4A1D3ADADA0099C19D /* help.c */,
 			);
 			path = nbtutil;
@@ -327,6 +330,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1E42DD4B1D3ADADA0099C19D /* help.c in Sources */,
+				1E9644191D3DA36500C34799 /* edit.c in Sources */,
 				1EA07E7F1D3AD23F00A996F5 /* main.c in Sources */,
 				1E42DD491D3AD7D70099C19D /* dump.c in Sources */,
 			);

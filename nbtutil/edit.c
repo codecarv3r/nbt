@@ -6,10 +6,10 @@
  *  |  | \    |    (_) |  |  |
  *  |__|  \___|__|\____/  |__|
  *
- *  commands.h
+ *  edit.c
  *  This file is part of nbt.
  *
- *  Created by Silas Schwarz on 7/16/16.
+ *  Created by Silas Schwarz on 7/18/16.
  *  Copyright (c) 2016 ZCodeMT LLC.
  *
  *  nbt is free software: you can redistribute it and/or modify
@@ -27,17 +27,8 @@
  *
  */
 
-#ifndef dump_h
-#define dump_h
+#include "commands.h"
 
-#include <stdio.h>
-
-__BEGIN_DECLS
-
-int dump_main(int argc, const char* argv[]);
-int edit_main(int argc, const char* argv[]);
-int help_main(int argc, const char* argv[]);
-
-__END_DECLS
-
-#endif /* dump_h */
+int edit_main(int argc, const char* argv[]) {
+	return 0;
+}

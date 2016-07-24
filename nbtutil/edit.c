@@ -144,14 +144,21 @@ void edit_tag(nbt_t* tag, const char* path, bool* exit, bool* no_output) {
 		size_t token_reserved = EXPECTED_MAX_TOKEN;
 		char* token;
 		uintptr_t index = 0;
-		while ((token = command_token(command, &index))) {
+		token = command_token(command, &index);
+		if (token) {
+			tokens[0] = token;
+			token_count++;
+		} else {
+			continue;
+		}
+		do {
 			if (token_count == token_reserved) {
 				token_reserved <<= 1;
 				tokens = realloc(tokens, token_reserved * sizeof(*tokens));
 			}
 			tokens[token_count] = token;
 			token_count++;
-		}
+		} while ((token = command_token(command, &index)));
 		if (token_count == token_reserved) {
 			token_reserved <<= 1;
 			tokens = realloc(tokens, token_reserved * sizeof(*tokens));

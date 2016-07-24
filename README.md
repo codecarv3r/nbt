@@ -19,7 +19,12 @@ A c99 library called [cNBT](https://github.com/FliPPeh/cNBT) for manipulating da
 * Graceful failure for corrupt data
 * Command line NBT data editor
 
-##Prerequisites
-* A compiler which supports c99
+##Instructions
+* Clone the repository
+* Open the Xcode project
+* Click the "Run" button
 
-I use Xcode to build libnbt and have included the Xcode project, but Xcode is not required.
+##Notes
+* If you don't use Xcode, you should still be able to use the project, but you will have to find your own way to build
+* I use zlib for compression
+* I use libedit for prompting. To turn this off, simply swith USE_READLINE in edit.c to 0
